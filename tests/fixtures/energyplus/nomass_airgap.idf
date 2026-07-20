@@ -1,0 +1,8 @@
+Version,8.1;
+GlobalGeometryRules,UpperLeftCorner,CounterClockWise,World;
+Material,Brick,Rough,0.10,0.50,1800,840;
+Material:NoMass,Insulation,Rough,2.5;
+Material:AirGap,Cavity,0.18;
+Construction,Insulated Wall,Brick,Insulation,Cavity;
+Zone,Room,0,0,0,0,1,1,3,30,10;
+BuildingSurface:Detailed,Wall,Wall,Insulated Wall,Room,Outdoors,,SunExposed,WindExposed,0.5,4,0,0,0,4,0,0,4,0,3,0,0,3;

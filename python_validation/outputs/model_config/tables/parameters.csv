@@ -1,0 +1,10 @@
+identifier;description;value
+GValue_Window_EPConstr_Glazing;GValue of Window with EP ConstructionGlazing (default value);0.5
+UValue_Window_EPConstr_Glazing;UValue of Window with EP ConstructionGlazing (default value);1
+convCoeff_CeilingGND;Convective coefficient of a adiabatic surface (unused, set to 0);0
+convCoeff_CeilingInt;Convective coefficient of CeilingInt (default, considering thermal radiation);8
+convCoeff_FloorInt;Convective coefficient of FloorInt (default, considering thermal radiation);5
+convCoeff_InternalMass;Convective Coefficient of Internal Mass (default, considering thermal radiation);6
+convCoeff_RoofADB;Convective coefficient of a ground contact surface (unused, set to 0);0
+convCoeff_WallExt;Convective coefficient of a surface to ambient air (default);12.5
+convCoeff_WallInt;Convective coefficient of WallInt (default, considering thermal radiation);7

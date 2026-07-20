@@ -1,0 +1,6 @@
+Version,8.1;
+GlobalGeometryRules,UpperLeftCorner,CounterClockWise,World;
+Material,Brick,Rough,0.10,0.50,1800,840;
+Construction,Wall,Brick;
+Zone,Room,0,0,0,0,1,1,3,30,10;
+BuildingSurface:Detailed,Adiabatic Wall,Wall,Wall,Room,Adiabatic,,NoSun,NoWind,0.5,4,0,0,0,4,0,0,4,0,3,0,0,3;

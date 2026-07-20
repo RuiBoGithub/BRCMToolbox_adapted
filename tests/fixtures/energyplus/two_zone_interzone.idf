@@ -1,0 +1,10 @@
+Version,8.1;
+GlobalGeometryRules,UpperLeftCorner,CounterClockWise,World;
+Material,Brick,Rough,0.10,0.50,1800,840;
+Construction,Wall,Brick;
+Zone,Left,0,0,0,0,1,1,3,30,10;
+Zone,Right,0,0,0,0,1,1,3,30,10;
+BuildingSurface:Detailed,Left Outside,Wall,Wall,Left,Outdoors,,SunExposed,WindExposed,0.5,4,0,0,0,0,4,0,0,4,3,0,0,3;
+BuildingSurface:Detailed,Left Partition,Wall,Wall,Left,Surface,Right Partition,NoSun,NoWind,0.5,4,4,0,0,4,4,0,4,4,3,4,0,3;
+BuildingSurface:Detailed,Right Partition,Wall,Wall,Right,Surface,Left Partition,NoSun,NoWind,0.5,4,4,4,0,4,0,0,4,0,3,4,4,3;
+BuildingSurface:Detailed,Right Outside,Wall,Wall,Right,Outdoors,,SunExposed,WindExposed,0.5,4,8,4,0,8,0,0,8,0,3,8,4,3;

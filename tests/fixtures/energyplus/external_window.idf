@@ -1,0 +1,9 @@
+Version,8.1;
+GlobalGeometryRules,UpperLeftCorner,CounterClockWise,World;
+Material,Brick,Rough,0.10,0.50,1800,840;
+WindowMaterial:SimpleGlazingSystem,Glass,2.7,0.6,0.7;
+Construction,Opaque,Brick;
+Construction,Glazing,Glass;
+Zone,Room,0,0,0,0,1,1,3,30,10;
+BuildingSurface:Detailed,Wall,Wall,Opaque,Room,Outdoors,,SunExposed,WindExposed,0.5,4,0,0,0,4,0,0,4,0,3,0,0,3;
+FenestrationSurface:Detailed,Window,Window,Glazing,Wall,,0.5,,1,4,1,0,1,3,0,1,3,0,2,1,0,2;

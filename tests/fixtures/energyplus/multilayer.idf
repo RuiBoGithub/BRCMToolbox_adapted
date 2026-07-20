@@ -1,0 +1,7 @@
+Version,8.1;
+GlobalGeometryRules,UpperLeftCorner,CounterClockWise,World;
+Material,Brick,Rough,0.10,0.50,1800,840;
+Material,Concrete,Rough,0.20,1.40,2200,900;
+Construction,Layered Wall,Brick,Concrete;
+Zone,Room,0,0,0,0,1,1,3,30,10;
+BuildingSurface:Detailed,Wall,Wall,Layered Wall,Room,Outdoors,,SunExposed,WindExposed,0.5,4,0,0,0,4,0,0,4,0,3,0,0,3;

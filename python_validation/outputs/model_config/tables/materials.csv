@@ -1,0 +1,5 @@
+identifier;description;specific_heat_capacity;specific_thermal_resistance;density;R_value
+M0001;Brick;840;2;1800;
+M0002;Concrete;900;0.7142857143;2200;
+M0003;Insulation;;;;2.5
+M0004;Cavity;;;;0.18

@@ -1,0 +1,6 @@
+Version,8.1;
+GlobalGeometryRules,UpperLeftCorner,CounterClockWise,World;
+Material,Slab,Rough,0.20,1.40,2200,900;
+Construction,Slab Construction,Slab;
+Zone,Room,0,0,0,0,1,1,3,30,10;
+BuildingSurface:Detailed,Ground Floor,Floor,Slab Construction,Room,Ground,,NoSun,NoWind,1,4,0,0,0,0,4,0,4,4,0,4,0,0;

@@ -1,0 +1,7 @@
+Version,8.1;
+GlobalGeometryRules,UpperLeftCorner,CounterClockWise,World;
+Material,Concrete,Rough,0.10,1.40,2200,900;
+Construction,Mass Construction,Concrete;
+Zone,Room,0,0,0,0,1,1,3,30,10;
+BuildingSurface:Detailed,Wall,Wall,Mass Construction,Room,Outdoors,,SunExposed,WindExposed,0.5,4,0,0,0,4,0,0,4,0,3,0,0,3;
+InternalMass,Furniture,Mass Construction,Room,8;
