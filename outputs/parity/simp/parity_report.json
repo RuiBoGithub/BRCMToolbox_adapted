@@ -1,0 +1,26 @@
+{
+  "source_idf": "_simp.idf",
+  "matlab_sha256": "NOT EXECUTED",
+  "python_sha256": "6002f5da51bcd7ee390db08f7df2276e5f0ddee81c01f78f7f140bdb008bcebc",
+  "same_input_file": false,
+  "tolerances": {
+    "rtol": 1e-10,
+    "atol": 1e-12
+  },
+  "tables": {},
+  "identifiers": {
+    "pass": false,
+    "first_mismatch": "MATLAB output missing"
+  },
+  "boundaries": {
+    "pass": false,
+    "first_mismatch": "MATLAB output missing"
+  },
+  "matrices": {},
+  "simulation": {
+    "pass": false,
+    "first_mismatch": "MATLAB output missing"
+  },
+  "overall_pass": false,
+  "first_mismatch": "MATLAB reference was not executed"
+}

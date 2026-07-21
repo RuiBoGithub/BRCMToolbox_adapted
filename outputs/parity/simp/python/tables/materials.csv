@@ -1,0 +1,4 @@
+identifier;description;specific_heat_capacity;specific_thermal_resistance;density;R_value;
+M0001;C5 - 4 IN HW CONCRETE;836.8;0.5781760511;2242.585;NaN;
+M0002;R13LAYER;NaN;NaN;NaN;2.290965;
+M0003;R31LAYER;NaN;NaN;NaN;5.456;
