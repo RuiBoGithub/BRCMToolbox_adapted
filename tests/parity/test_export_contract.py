@@ -23,10 +23,20 @@ def test_exporter_exists_and_uses_public_reference_workflow():
 
 def test_exporter_applies_modern_matlab_compatibility_and_checks_class_scope():
     source = EXPORTER.read_text(encoding="utf-8")
+    assert "this_file = mfilename('fullpath')" in source
+    assert "parity_dir = fileparts(this_file)" in source
+    assert "origin_matlab_dir = fileparts(parity_dir)" in source
+    assert "toolbox_directory = fullfile(origin_matlab_dir, 'toolbox')" in source
+    assert "repository_root = fileparts(origin_matlab_dir)" in source
+    assert "assert(isfolder(toolbox_directory)" in source
     assert "applyModernMatlabCompatibility(toolbox_directory)" in source
     assert "which('Building', '-all')" in source
     assert "expected_building" in source
     assert "export_brcm_reference:AmbiguousBuilding" in source
+    assert "clear classes" not in source
+    assert "clear all" not in source
+    assert "pwd" not in source
+    assert "cd(" not in source
 
 
 def test_original_toolbox_has_no_active_legacy_property_declarations():

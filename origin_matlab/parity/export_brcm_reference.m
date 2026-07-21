@@ -4,12 +4,16 @@ function export_brcm_reference(output_directory)
 % or serializing any BRCM class instances. Numeric arrays are written to
 % MATLAB v7 MAT files; identifiers, axes, and loaded input data are JSON.
 
-parity_directory = fileparts(mfilename('fullpath'));
-origin_directory = fileparts(parity_directory);
-toolbox_directory = fullfile(origin_directory, 'toolbox');
-repository_directory = fileparts(origin_directory);
+this_file = mfilename('fullpath');
+parity_dir = fileparts(this_file);
+origin_matlab_dir = fileparts(parity_dir);
+toolbox_directory = fullfile(origin_matlab_dir, 'toolbox');
+repository_root = fileparts(origin_matlab_dir);
+assert(isfolder(toolbox_directory), ...
+    'export_brcm_reference:ToolboxNotFound', ...
+    'Resolved MATLAB toolbox directory does not exist: %s', toolbox_directory);
 if nargin < 1 || isempty(output_directory)
-    output_directory = fullfile(repository_directory, 'tests', 'fixtures', 'matlab');
+    output_directory = fullfile(repository_root, 'tests', 'fixtures', 'matlab');
 end
 if exist('jsonencode', 'builtin') ~= 5 && exist('jsonencode', 'file') ~= 2
     error('export_brcm_reference:jsonencode', ...
@@ -23,7 +27,6 @@ end
 % class, then put this exact toolbox at the front of the search path.
 addpath(fullfile(toolbox_directory, 'Auxiliary'), '-begin');
 applyModernMatlabCompatibility(toolbox_directory);
-clear classes
 addpath(genpath(toolbox_directory), '-begin');
 rehash toolboxcache
 
