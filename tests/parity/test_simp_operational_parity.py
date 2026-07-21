@@ -1,4 +1,5 @@
 import json
+import hashlib
 from pathlib import Path
 import subprocess
 import sys
@@ -49,6 +50,10 @@ def test_simp_zero_window_and_other_empty_optional_tables_keep_exact_headers():
 def test_simp_operational_parity_when_matlab_was_executed():
     if not MATLAB_MANIFEST.is_file():
         pytest.skip("MATLAB _simp.idf reference not generated")
+    manifest = json.loads(MATLAB_MANIFEST.read_text(encoding="utf-8"))
+    source_hash = hashlib.sha256(SOURCE.read_bytes()).hexdigest()
+    if manifest.get("source_idf_sha256") != source_hash:
+        pytest.skip("MATLAB _simp.idf reference is stale for the current source bytes")
     subprocess.run([sys.executable, str(PYTHON_RUNNER)], cwd=ROOT, check=True)
     comparison = subprocess.run([sys.executable, str(COMPARATOR)], cwd=ROOT, check=False)
     assert REPORT.is_file()

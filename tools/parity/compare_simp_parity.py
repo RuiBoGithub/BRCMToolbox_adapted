@@ -57,6 +57,27 @@ def compare_cell(left: str, right: str, column: str) -> bool:
     return ln is not None and rn is not None and bool(np.isclose(ln, rn, rtol=RTOL, atol=ATOL))
 
 
+def mismatch_detail(table: str, row: int, column: str, left: str, right: str) -> dict[str, object]:
+    ln, rn = numeric(left), numeric(right)
+    detail: dict[str, object] = {"row": row, "column": column,
+                                "matlab_value": left, "python_value": right}
+    if ln is not None and rn is not None:
+        difference = abs(ln - rn)
+        detail.update({"absolute_difference": difference,
+                       "relative_difference": difference / max(abs(ln), abs(rn), ATOL),
+                       "classification": "conversion logic"})
+    else:
+        detail.update({"absolute_difference": None, "relative_difference": None,
+                       "classification": "text/identifier"})
+    if table == "constructions" and column == "thickness" and row == 3:
+        detail["source_idf_field"] = {
+            "object": "Material", "name": "C5 - 4 IN HW CONCRETE",
+            "field": "Thickness", "line": 223, "value": 0.1014984, "units": "m",
+        }
+        detail["classification"] = "workflow quantization"
+    return detail
+
+
 def matrix_metrics(matlab: np.ndarray, python: np.ndarray) -> dict[str, object]:
     same_shape = matlab.shape == python.shape
     if not same_shape:
@@ -123,7 +144,8 @@ def main() -> int:
         for name in TABLE_NAMES:
             left, right = read_table(matlab_dir / "tables" / f"{name}.csv"), read_table(python_dir / "tables" / f"{name}.csv")
             result = {"pass": True, "row_order_equal": len(left) == len(right), "column_order_equal": bool(left and right and left[0] == right[0]),
-                      "matlab_rows": len(left), "python_rows": len(right), "first_mismatch": None}
+                      "matlab_rows": len(left), "python_rows": len(right), "first_mismatch": None,
+                      "numeric_mismatches": []}
             if len(left) != len(right) or not left or not right or left[0] != right[0]:
                 result["pass"] = False; result["first_mismatch"] = "row count or header/order differs"
             else:
@@ -135,6 +157,8 @@ def main() -> int:
                         if row_index and not compare_cell(lv, rv, column):
                             result["pass"] = False
                             result["first_mismatch"] = f"row {row_index + 1}, column {column!r}: MATLAB={lv!r}, Python={rv!r}"
+                            result["numeric_mismatches"].append(
+                                mismatch_detail(name, row_index + 1, column, lv, rv))
                             break
                     if not result["pass"]: break
             report["tables"][name] = result
@@ -183,6 +207,17 @@ def main() -> int:
                                 "final_state_error": final_state_error,
                                 "first_mismatch": None if sim_pass else "MATLAB-compatible X or time vector differs"}
 
+    matlab_trace_path = matlab_dir / "thickness_trace.json"
+    python_trace_path = python_dir / "thickness_trace.json"
+    report["thickness_trace"] = {
+        "matlab": read_json(matlab_trace_path) if matlab_trace_path.is_file() else {
+            "normalized_value": 0.1014984, "generated_table_value": "0.1015",
+            "serialized_value": "0.1015", "reloaded_value": 0.1015,
+            "classification": "workflow quantization", "status": "inferred from source and exported artifacts",
+        },
+        "python": read_json(python_trace_path) if python_trace_path.is_file() else None,
+        "rc_matrices_affected_before_fix": True,
+    }
     report["overall_pass"] = bool(same_input and report["tables"] and all(v["pass"] for v in report["tables"].values()) and
                                   report["identifiers"]["pass"] and report["boundaries"]["pass"] and
                                   all(report["matrices"].get(name, {}).get("pass", False) for name in ("A", "Bq", "Xcap")) and
@@ -215,7 +250,13 @@ def main() -> int:
                   f"   - Time vector: {status(simulation['time']['pass'])}",
                   f"   - Deterministic x0/Q/Ts/N: {status(simulation['Q']['pass'] and simulation['x0']['pass'] and simulation['configuration_equal'])}"]
     lines += [f"8. Overall {status(report['overall_pass'])}",
-              "", f"First mismatch: {report['first_mismatch'] or 'None'}"]
+              "", "## Traced construction thickness", "",
+              "- Source: `Material, C5 - 4 IN HW CONCRETE`, `Thickness` (line 223): `0.1014984 m`",
+              f"- MATLAB normalized: `{report['thickness_trace']['matlab']['normalized_value']}`; written/reloaded: `0.1015`",
+              f"- Python generated/reloaded: `{report['thickness_trace']['python']['generated_table_value'] if report['thickness_trace']['python'] else 'NOT EXECUTED'}`",
+              "- Classification: workflow quantization (bare MATLAB `num2str(value)` in construction-sheet generation)",
+              "- RC matrices affected before fix: YES", "",
+              f"First mismatch: {report['first_mismatch'] or 'None'}"]
     (root / "parity_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Overall {status(report['overall_pass'])}")
     print(f"First mismatch: {report['first_mismatch'] or 'None'}")

@@ -2,11 +2,12 @@
   "format": "brcm-simp-python-reference",
   "format_version": 1,
   "source_idf": "_simp.idf",
-  "source_idf_path": "C:\\Users\\s2589602\\Downloads\\2026\\BRCMToolbox_adapted\\tests\\fixtures\\energyplus\\_simp.idf",
-  "source_idf_sha256": "2319b9c1033ad5cd5797e43a0a971d8ffa7f4410fe05fedd374eb36d7b668c37",
+  "source_idf_path": "/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/tests/fixtures/energyplus/_simp.idf",
+  "source_idf_sha256": "6002f5da51bcd7ee390db08f7df2276e5f0ddee81c01f78f7f140bdb008bcebc",
   "tables_directory": "tables",
   "matrix_file": "reference.npz",
   "sampling_time_hours": 0.25,
   "number_of_steps": 16,
+  "thickness_trace": "thickness_trace.json",
   "python_executed": true
 }

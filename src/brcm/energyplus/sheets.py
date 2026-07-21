@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from .geometry import polygon_area
 from .records import NormalizedEnergyPlusModel
-from ..constants import Constants,matlab_number
+from ..constants import Constants,matlab_default_num2str,matlab_number
 from ..exceptions import ValidationError
 
 def _s(value): return matlab_number(value) if isinstance(value,(int,float)) else str(value)
@@ -33,9 +33,9 @@ def _parameter(identifier):
         match=re.search(r'FilmCoeff_(.+)',identifier); return ('Convective coefficient of OtherSideCoefficients boundary condition',str(float(match.group(1).replace('p','.'))))
     if 'TBCwoFC' in identifier: return ('Convective coefficient of OtherSideCoefficients boundary condition (unused, set to 0)','0')
     if identifier.endswith('Ext'): return ('Convective coefficient of a surface to ambient air (default)','12.5')
-    defaults={'CeilingInt':8,'RoofInt':8,'FloorInt':5,'WallInt':7}
-    for ending,value in defaults.items():
-        if identifier.endswith(ending): return (f'Convective coefficient of {ending} (default, considering thermal radiation)',str(value))
+    defaults={'CeilingInt':('ceiling',8),'RoofInt':('roof',8),'FloorInt':('floor',5),'WallInt':('wall',7)}
+    for ending,(surface,value) in defaults.items():
+        if identifier.endswith(ending): return (f'Convective coefficient of {surface} to zone (default, considering thermal radiation)',str(value))
     return ('empty_description','NaN')
 
 def generate_brcm_tables(model: NormalizedEnergyPlusModel) -> dict[str,list[list[str]]]:
@@ -76,7 +76,10 @@ def generate_brcm_tables(model: NormalizedEnergyPlusModel) -> dict[str,list[list
             continue
         usable=[m for m in layers if m.kind!='Material:InfraredTransparent']
         if not usable: continue
-        mids=','.join(material_map[m.name.casefold()] for m in usable); thickness=','.join(_s(m.thickness if m.kind=='Material' else 0) for m in usable)
+        mids=','.join(material_map[m.name.casefold()] for m in usable)
+        # Original EP2BRCM uses bare num2str here; this quantized string is
+        # written and reloaded before thermal-model generation.
+        thickness=','.join(matlab_default_num2str(m.thickness) if m.kind=='Material' else '0' for m in usable)
         pairs=sorted({(_conv(s,'A'),_conv(s,'B')) for s in uses}) or [('convCoeff_UNKNOWN','convCoeff_UNKNOWN')]
         for ca,cb in pairs:
             cid=f"C{len(tables['constructions']):04d}"; tables['constructions'].append([cid,construction.name,mids,thickness,ca,cb]); required.extend((ca,cb))

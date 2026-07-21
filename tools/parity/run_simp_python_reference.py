@@ -15,6 +15,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
 
 from brcm import SimulationExperiment, ThermalModelData, generate_thermal_model  # noqa: E402
+from brcm.constants import matlab_default_num2str  # noqa: E402
 from brcm.energyplus import convert_idf_to_brcm_data  # noqa: E402
 
 
@@ -55,6 +56,26 @@ def main() -> int:
     table_directory.mkdir(parents=True, exist_ok=True)
     data.write_directory(table_directory)
 
+    source_material = next(item for item in conversion.normalized_model.materials
+                           if item.name == "C5 - 4 IN HW CONCRETE")
+    floor_row = next(row for row in conversion.tables["constructions"]
+                     if len(row) > 1 and row[1] == "FLOOR")
+    loaded_floor = next(item for item in data.constructions if item.description == "FLOOR")
+    thickness_trace = {
+        "source_idf": {"object": "Material", "name": "C5 - 4 IN HW CONCRETE",
+                       "field": "Thickness", "line": 223, "value": 0.1014984, "units": "m"},
+        "parser_text": "0.1014984",
+        "normalized_value": source_material.thickness,
+        "generated_table_value": floor_row[3],
+        "serialized_value": floor_row[3],
+        "reloaded_value": float(loaded_floor.thickness[0]),
+        "effective_model_value": float(loaded_floor.thickness[0]),
+        "matlab_num2str_emulation": matlab_default_num2str(source_material.thickness),
+        "classification": "workflow quantization",
+    }
+    (output / "thickness_trace.json").write_text(
+        json.dumps(thickness_trace, indent=2) + "\n", encoding="utf-8")
+
     ts = 0.25
     steps = 16
     nx = len(model.state_identifiers)
@@ -87,7 +108,8 @@ def main() -> int:
         "source_idf": "_simp.idf", "source_idf_path": str(idf),
         "source_idf_sha256": sha256_file(idf), "tables_directory": "tables",
         "matrix_file": "reference.npz", "sampling_time_hours": ts,
-        "number_of_steps": steps, "python_executed": True,
+        "number_of_steps": steps, "thickness_trace": "thickness_trace.json",
+        "python_executed": True,
     }
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(f"Exported _simp.idf Python reference to {output}")

@@ -65,3 +65,9 @@ def matlab_number(value: float | int) -> str:
     """Match the toolbox's observable ``num2str(..., '%.10g')`` convention."""
 
     return format(float(value), Constants.NUMERIC_FORMAT)
+
+
+def matlab_default_num2str(value: float | int) -> str:
+    """Match scalar MATLAB ``num2str(value)`` used for layer thicknesses."""
+
+    return format(float(value), ".5g")

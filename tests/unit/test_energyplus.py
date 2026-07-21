@@ -73,6 +73,12 @@ def test_multilayer_and_nomass_material_layer():
     assert tables["constructions"][1][3]=="0.1,0"
     assert tables["materials"][2][-1]=="2.5"
 
+def test_construction_thickness_uses_original_matlab_num2str_precision():
+    material="Material,Concrete,Rough,0.1014984,1.729577,2242.585,836.8;"
+    tables=generate_brcm_tables(normalized(snippet(
+        materials=material, constructions="Construction,Wall Construction,Concrete;")))
+    assert tables["constructions"][1][3]=="0.1015"
+
 def test_infrared_transparent_becomes_brcm_nomass_construction():
     text=snippet(materials="Material:InfraredTransparent,IR;",constructions="Construction,Wall Construction,IR;")
     tables=generate_brcm_tables(normalized(text))

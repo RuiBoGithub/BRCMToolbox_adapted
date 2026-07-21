@@ -1,284 +1,55 @@
 {
   "source_idf": "_simp.idf",
   "matlab_sha256": "2319b9c1033ad5cd5797e43a0a971d8ffa7f4410fe05fedd374eb36d7b668c37",
-  "python_sha256": "2319b9c1033ad5cd5797e43a0a971d8ffa7f4410fe05fedd374eb36d7b668c37",
-  "same_input_file": true,
+  "python_sha256": "6002f5da51bcd7ee390db08f7df2276e5f0ddee81c01f78f7f140bdb008bcebc",
+  "same_input_file": false,
   "tolerances": {
     "rtol": 1e-10,
     "atol": 1e-12
   },
-  "tables": {
-    "zones": {
-      "pass": true,
-      "row_order_equal": true,
-      "column_order_equal": true,
-      "matlab_rows": 2,
-      "python_rows": 2,
-      "first_mismatch": null
-    },
-    "buildingelements": {
-      "pass": true,
-      "row_order_equal": true,
-      "column_order_equal": true,
-      "matlab_rows": 7,
-      "python_rows": 7,
-      "first_mismatch": null
-    },
-    "constructions": {
-      "pass": false,
-      "row_order_equal": true,
-      "column_order_equal": true,
-      "matlab_rows": 4,
-      "python_rows": 4,
-      "first_mismatch": "row 3, column 'thickness': MATLAB='0.1015', Python='0.1014984'"
-    },
-    "materials": {
-      "pass": true,
-      "row_order_equal": true,
-      "column_order_equal": true,
-      "matlab_rows": 4,
-      "python_rows": 4,
-      "first_mismatch": null
-    },
-    "windows": {
-      "pass": true,
-      "row_order_equal": true,
-      "column_order_equal": true,
-      "matlab_rows": 1,
-      "python_rows": 1,
-      "first_mismatch": null
-    },
-    "parameters": {
-      "pass": false,
-      "row_order_equal": true,
-      "column_order_equal": true,
-      "matlab_rows": 7,
-      "python_rows": 7,
-      "first_mismatch": "row 3, column 'description': MATLAB='Convective coefficient of ceiling to zone (default, considering thermal radiation)', Python='Convective coefficient of CeilingInt (default, considering thermal radiation)'"
-    },
-    "nomassconstructions": {
-      "pass": true,
-      "row_order_equal": true,
-      "column_order_equal": true,
-      "matlab_rows": 1,
-      "python_rows": 1,
-      "first_mismatch": null
-    }
-  },
+  "tables": {},
   "identifiers": {
-    "pass": true,
-    "state_exact": true,
-    "heat_flux_exact": true,
-    "first_mismatch": null
+    "pass": false,
+    "first_mismatch": "MATLAB output missing"
   },
   "boundaries": {
     "pass": false,
-    "first_mismatch": "Boundary adiabatic record 1 differs",
-    "matlab": {
-      "ambient": [],
-      "adiabatic": [
-        {
-          "identifier_1": "x_B0005_L1_s1_ADBZ0001",
-          "identifier_2": "ADB",
-          "value": 7915.416809102656
-        }
-      ],
-      "ground": [],
-      "user_defined": [
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 41.02766295707471
-        }
-      ]
-    },
-    "python": {
-      "ambient": [],
-      "adiabatic": [
-        {
-          "identifier_1": "x_B0005_L1_s1_ADBZ0001",
-          "identifier_2": "ADB",
-          "value": 7915.54158611288
-        }
-      ],
-      "ground": [],
-      "user_defined": [
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 27.717664989937067
-        },
-        {
-          "identifier_1": "x_AMB",
-          "identifier_2": "x_Z0001",
-          "value": 41.02766295707472
-        }
-      ]
-    }
+    "first_mismatch": "MATLAB output missing"
   },
-  "matrices": {
-    "A": {
-      "pass": false,
-      "shape_equal": true,
-      "matlab_shape": [
-        2,
-        2
-      ],
-      "python_shape": [
-        2,
-        2
-      ],
-      "max_absolute_error": 1.5784572856680085e-09,
-      "max_relative_error": 1.7780328168800527e-05,
-      "mismatching_entries": 4,
-      "nonzero_pattern_mismatches": 0
-    },
-    "Bq": {
-      "pass": true,
-      "shape_equal": true,
-      "matlab_shape": [
-        2,
-        2
-      ],
-      "python_shape": [
-        2,
-        2
-      ],
-      "max_absolute_error": 3.5633150796408647e-13,
-      "max_relative_error": 1.5763546798060153e-05,
-      "mismatching_entries": 0,
-      "nonzero_pattern_mismatches": 0
-    },
-    "Xcap": {
-      "pass": false,
-      "shape_equal": true,
-      "matlab_shape": [
-        2,
-        2
-      ],
-      "python_shape": [
-        2,
-        2
-      ],
-      "max_absolute_error": 697.3655689582229,
-      "max_relative_error": 1.5763546797954203e-05,
-      "mismatching_entries": 1,
-      "nonzero_pattern_mismatches": 0
-    }
-  },
+  "matrices": {},
   "simulation": {
     "pass": false,
-    "X": {
-      "pass": false,
-      "shape_equal": true,
-      "matlab_shape": [
-        2,
-        16
-      ],
-      "python_shape": [
-        2,
-        16
-      ],
-      "max_absolute_error": 9.961595317520278e-07,
-      "max_relative_error": 4.959864552478543e-08,
-      "mismatching_entries": 30,
-      "nonzero_pattern_mismatches": 0
+    "first_mismatch": "MATLAB output missing"
+  },
+  "thickness_trace": {
+    "matlab": {
+      "normalized_value": 0.1014984,
+      "generated_table_value": "0.1015",
+      "serialized_value": "0.1015",
+      "reloaded_value": 0.1015,
+      "classification": "workflow quantization",
+      "status": "inferred from source and exported artifacts"
     },
-    "time": {
-      "pass": true,
-      "shape_equal": true,
-      "matlab_shape": [
-        1,
-        16
-      ],
-      "python_shape": [
-        1,
-        16
-      ],
-      "max_absolute_error": 0.0,
-      "max_relative_error": 0.0,
-      "mismatching_entries": 0,
-      "nonzero_pattern_mismatches": 0
+    "python": {
+      "source_idf": {
+        "object": "Material",
+        "name": "C5 - 4 IN HW CONCRETE",
+        "field": "Thickness",
+        "line": 223,
+        "value": 0.1014984,
+        "units": "m"
+      },
+      "parser_text": "0.1014984",
+      "normalized_value": 0.1014984,
+      "generated_table_value": "0.1015",
+      "serialized_value": "0.1015",
+      "reloaded_value": 0.1015,
+      "effective_model_value": 0.1015,
+      "matlab_num2str_emulation": "0.1015",
+      "classification": "workflow quantization"
     },
-    "Q": {
-      "pass": true,
-      "shape_equal": true,
-      "matlab_shape": [
-        2,
-        16
-      ],
-      "python_shape": [
-        2,
-        16
-      ],
-      "max_absolute_error": 0.0,
-      "max_relative_error": 0.0,
-      "mismatching_entries": 0,
-      "nonzero_pattern_mismatches": 0
-    },
-    "x0": {
-      "pass": true,
-      "shape_equal": true,
-      "matlab_shape": [
-        2,
-        1
-      ],
-      "python_shape": [
-        2,
-        1
-      ],
-      "max_absolute_error": 0.0,
-      "max_relative_error": 0.0,
-      "mismatching_entries": 0,
-      "nonzero_pattern_mismatches": 0
-    },
-    "configuration_equal": true,
-    "per_state_rmse": [
-      3.147567532508544e-07,
-      5.580384510658688e-07
-    ],
-    "maximum_absolute_trajectory_error": 9.961595317520278e-07,
-    "final_state_error": [
-      6.554175833173304e-07,
-      9.961595317520278e-07
-    ],
-    "first_mismatch": "MATLAB-compatible X or time vector differs"
+    "rc_matrices_affected_before_fix": true
   },
   "overall_pass": false,
-  "first_mismatch": "Table constructions: row 3, column 'thickness': MATLAB='0.1015', Python='0.1014984'"
+  "first_mismatch": "Source IDF SHA-256 differs"
 }
