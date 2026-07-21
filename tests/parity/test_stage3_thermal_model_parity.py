@@ -4,7 +4,7 @@ from brcm import ThermalModelData, generate_thermal_model
 
 
 def test_thermal_generation_matches_matlab_fixture(matlab_reference):
-    data = ThermalModelData.from_directory("BuildingData/DemoBuilding/ThermalModel")
+    data = ThermalModelData.from_directory("origin_matlab/toolbox/BuildingData/DemoBuilding/ThermalModel")
     model = generate_thermal_model(data)
     identifiers = matlab_reference.manifest["identifiers"]
     assert model.state_identifiers == identifiers["x"]

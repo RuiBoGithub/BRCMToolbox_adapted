@@ -12,7 +12,7 @@ from brcm import (
 from brcm.exceptions import ValidationError
 
 
-SOURCE="BuildingData/DemoBuilding/EHFM/internalgains.csv"
+SOURCE="origin_matlab/toolbox/BuildingData/DemoBuilding/EHFM/internalgains.csv"
 
 
 class SyntheticEHF(EHFModelBaseClass):
@@ -105,7 +105,7 @@ def test_zero_and_singular_A_use_exact_augmented_exponential(A):
 
 
 def test_demo_building_composition_discretization_constraints_cost_and_determinism():
-    data=ThermalModelData.from_directory("BuildingData/DemoBuilding/ThermalModel"); t=generate_thermal_model(data); root="BuildingData/DemoBuilding/EHFM"
+    data=ThermalModelData.from_directory("origin_matlab/toolbox/BuildingData/DemoBuilding/ThermalModel"); t=generate_thermal_model(data); root="origin_matlab/toolbox/BuildingData/DemoBuilding/EHFM"
     def build():
         models=[BuildingHull(data,t,"BuildingHull",root+"/buildinghull"),AHU(data,t,"AHU1",root+"/ahu"),InternalGains(data,t,"IG",root+"/internalgains"),BEHeatfluxes(data,t,"TABS",root+"/BEHeatfluxes"),Radiators(data,t,"Rad",root+"/radiators")]
         return compose_building_model(t,models)

@@ -4,9 +4,12 @@ function export_brcm_reference(output_directory)
 % or serializing any BRCM class instances. Numeric arrays are written to
 % MATLAB v7 MAT files; identifiers, axes, and loaded input data are JSON.
 
-root_directory = fileparts(mfilename('fullpath'));
+parity_directory = fileparts(mfilename('fullpath'));
+origin_directory = fileparts(parity_directory);
+toolbox_directory = fullfile(origin_directory, 'toolbox');
+repository_directory = fileparts(origin_directory);
 if nargin < 1 || isempty(output_directory)
-    output_directory = fullfile(root_directory, 'tests', 'fixtures', 'matlab');
+    output_directory = fullfile(repository_directory, 'tests', 'fixtures', 'matlab');
 end
 if exist('jsonencode', 'builtin') ~= 5 && exist('jsonencode', 'file') ~= 2
     error('export_brcm_reference:jsonencode', ...
@@ -16,17 +19,17 @@ if exist(output_directory, 'dir') ~= 7
     mkdir(output_directory);
 end
 
-addpath(genpath(root_directory));
+addpath(genpath(toolbox_directory));
 old_directory = pwd;
 cleanup_directory = onCleanup(@() cd(old_directory)); %#ok<NASGU>
-cd(root_directory);
+cd(toolbox_directory);
 
 global g_debugLvl
 g_debugLvl = -1;
 
 building_name = 'DemoBuilding';
-thermal_data_directory = fullfile(root_directory, 'BuildingData', building_name, 'ThermalModel');
-ehf_data_directory = fullfile(root_directory, 'BuildingData', building_name, 'EHFM');
+thermal_data_directory = fullfile(toolbox_directory, 'BuildingData', building_name, 'ThermalModel');
+ehf_data_directory = fullfile(toolbox_directory, 'BuildingData', building_name, 'EHFM');
 
 B = Building(building_name);
 B.loadThermalModelData(thermal_data_directory);
@@ -85,7 +88,7 @@ for i = 1:length(B.building_model.EHF_submodels)
 
     ehf_models(end+1) = struct( ... %#ok<AGROW>
         'index', i, 'class_name', ehf_class, 'identifier', ehf_identifier, ...
-        'source_file', relative_to_root(ehf.source_file, root_directory), ...
+        'source_file', relative_to_root(ehf.source_file, toolbox_directory), ...
         'mat_file', mat_file, 'identifiers', ehf_ids);
 
     prefix = sprintf('ehf.%s', ehf_identifier);

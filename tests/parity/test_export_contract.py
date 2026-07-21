@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).parents[2]
-EXPORTER = ROOT / "export_brcm_reference.m"
+EXPORTER = ROOT / "origin_matlab" / "parity" / "export_brcm_reference.m"
 
 
 def test_exporter_exists_and_uses_public_reference_workflow():
@@ -27,4 +27,3 @@ def test_exporter_never_saves_brcm_objects():
     forbidden_names = ("'B'", "'SimExp'", "'ehf'", "'identifiers'")
     for line in save_lines:
         assert not any(name in line for name in forbidden_names)
-

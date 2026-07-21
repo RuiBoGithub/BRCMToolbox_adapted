@@ -4,7 +4,7 @@ from brcm import ThermalModelData
 
 
 def test_python_loaded_record_order_matches_matlab_fixture(matlab_reference):
-    source = matlab_reference.root.parents[2] / "BuildingData" / "DemoBuilding" / "ThermalModel"
+    source = matlab_reference.root.parents[2] / "origin_matlab" / "toolbox" / "BuildingData" / "DemoBuilding" / "ThermalModel"
     # Installed/relocated fixtures need not live below the repository. In the
     # normal source tree, use the repository data; otherwise this test is not
     # applicable yet.
@@ -25,4 +25,3 @@ def test_python_loaded_record_order_matches_matlab_fixture(matlab_reference):
     }
     for name, records in mapping.items():
         assert [record.identifier for record in records] == [record["identifier"] for record in fixture_data[name]]
-

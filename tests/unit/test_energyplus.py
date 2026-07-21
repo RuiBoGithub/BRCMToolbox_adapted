@@ -43,7 +43,7 @@ def test_bundled_idd_labels_are_associated():
     parser=LegacyIDDParser(); objects=parser.parse("tests/fixtures/energyplus/minimal.idf")
     material=next(o for o in objects if o.type=="Material")
     assert material.field_names[:4]==("Name","Roughness","Thickness","Conductivity")
-    labels=parse_idd("EP2BRCM/IDDFiles/V8-1-0-Energy+.idd")
+    labels=parse_idd("origin_matlab/toolbox/EP2BRCM/IDDFiles/V8-1-0-Energy+.idd")
     assert labels["buildingsurface:detailed"][:3]==("Name","Surface Type","Construction Name")
 
 def test_one_zone_and_external_wall_normalization_and_sheets():

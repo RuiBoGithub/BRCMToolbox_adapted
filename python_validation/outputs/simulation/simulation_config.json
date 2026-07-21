@@ -1,9 +1,0 @@
-{
-  "INITIAL_TEMPERATURE_C": 20.0,
-  "AMBIENT_TEMPERATURE_C": 30.0,
-  "ZONE_HEATING_W": 0.0,
-  "SAMPLE_TIME_HOURS": 0.016666666666666666,
-  "N_STEPS": 60,
-  "input_rule": "For each ambient boundary: q = G * (Tamb - T_boundary_state)",
-  "boundary_value_semantics": "Conductance G [W/K]"
-}

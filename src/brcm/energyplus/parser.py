@@ -64,7 +64,7 @@ class EnergyPlusParser(ABC):
 
 class LegacyIDDParser(EnergyPlusParser):
     def __init__(self,idd_directory: str|Path|None=None):
-        self.idd_directory=Path(idd_directory) if idd_directory else Path(__file__).parents[3]/'EP2BRCM'/'IDDFiles'
+        self.idd_directory=Path(idd_directory) if idd_directory else Path(__file__).parents[3]/'origin_matlab'/'toolbox'/'EP2BRCM'/'IDDFiles'
     def parse(self,source):
         objects,_=get_idf_objects(source); version=next((o.values[0] for o in objects if o.object_type.casefold()=='version'),None)
         if not version: raise DataFormatError("IDF has no Version object")

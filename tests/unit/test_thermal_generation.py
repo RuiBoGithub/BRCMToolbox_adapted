@@ -106,7 +106,7 @@ def test_invalid_zero_net_area_is_rejected():
 
 
 def test_demo_building_generation_is_finite_structural_and_deterministic():
-    data = ThermalModelData.from_directory("BuildingData/DemoBuilding/ThermalModel")
+    data = ThermalModelData.from_directory("origin_matlab/toolbox/BuildingData/DemoBuilding/ThermalModel")
     first = generate_thermal_model(data)
     second = generate_thermal_model(data)
     assert len(first.state_identifiers) == 390

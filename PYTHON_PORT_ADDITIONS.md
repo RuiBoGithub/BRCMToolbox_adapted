@@ -45,7 +45,11 @@ BRCMToolbox_v1.03/
 ├── notebooks/
 │   └── BRCM_EnergyPlus_End_to_End.ipynb
 │                              # Operator walkthrough
-├── export_brcm_reference.m    # Exports portable MATLAB reference fixtures
+├── origin_matlab/
+│   ├── toolbox/               # Original MATLAB BRCM toolbox, unchanged internally
+│   └── parity/
+│       └── export_brcm_reference.m
+│                              # Exports portable MATLAB reference fixtures
 └── PYTHON_PORT_ADDITIONS.md   # This summary
 ```
 

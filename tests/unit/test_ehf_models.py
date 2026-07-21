@@ -10,7 +10,7 @@ from brcm import (
 from brcm.exceptions import ValidationError
 
 
-ROOT = "BuildingData/DemoBuilding"
+ROOT = "origin_matlab/toolbox/BuildingData/DemoBuilding"
 
 
 @pytest.fixture(scope="module")

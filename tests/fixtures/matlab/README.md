@@ -5,13 +5,14 @@ This directory intentionally contains no fabricated reference values.
 Generate the fixtures from the repository root with:
 
 ```matlab
-export_brcm_reference(fullfile(pwd, 'tests', 'fixtures', 'matlab'))
+addpath(fullfile(pwd, 'origin_matlab', 'parity'))
+export_brcm_reference()
 ```
 
 Or from a shell using a MATLAB release with `-batch` support:
 
 ```bash
-matlab -batch "export_brcm_reference(fullfile(pwd,'tests','fixtures','matlab'))"
+matlab -batch "addpath(fullfile(pwd,'origin_matlab','parity')); export_brcm_reference()"
 ```
 
 The exporter writes numeric MATLAB v7 MAT files plus JSON metadata and loaded

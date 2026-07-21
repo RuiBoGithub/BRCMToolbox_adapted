@@ -4,11 +4,11 @@ from brcm import AHU, BEHeatfluxes, BuildingHull, Identifier, InternalGains, Rad
 
 
 def test_ehf_matrices_match_matlab_fixtures(matlab_reference):
-    data=ThermalModelData.from_directory("BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data)
+    data=ThermalModelData.from_directory("origin_matlab/toolbox/BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data)
     definitions={"BuildingHull":(BuildingHull,"buildinghull"),"AHU1":(AHU,"ahu"),"IG":(InternalGains,"internalgains"),"TABS":(BEHeatfluxes,"BEHeatfluxes"),"Rad":(Radiators,"radiators")}
     for entry in matlab_reference.manifest["ehf_models"]:
         identifier=entry["identifier"]; cls,filename=definitions[identifier]
-        model=cls(data,thermal,identifier,f"BuildingData/DemoBuilding/EHFM/{filename}")
+        model=cls(data,thermal,identifier,f"origin_matlab/toolbox/BuildingData/DemoBuilding/EHFM/{filename}")
         assert model.identifiers.x == entry["identifiers"]["x"]
         assert model.identifiers.q == entry["identifiers"]["q"]
         assert model.identifiers.u == entry["identifiers"]["u"]
@@ -18,9 +18,9 @@ def test_ehf_matrices_match_matlab_fixtures(matlab_reference):
 
 
 def test_ehf_constraints_and_cost_match_exported_matlab_totals(matlab_reference):
-    data=ThermalModelData.from_directory("BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data)
+    data=ThermalModelData.from_directory("origin_matlab/toolbox/BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data)
     definitions=[(BuildingHull,"BuildingHull","buildinghull"),(AHU,"AHU1","ahu"),(InternalGains,"IG","internalgains"),(BEHeatfluxes,"TABS","BEHeatfluxes"),(Radiators,"Rad","radiators")]
-    models=[cls(data,thermal,identifier,f"BuildingData/DemoBuilding/EHFM/{filename}") for cls,identifier,filename in definitions]
+    models=[cls(data,thermal,identifier,f"origin_matlab/toolbox/BuildingData/DemoBuilding/EHFM/{filename}") for cls,identifier,filename in definitions]
     ids=matlab_reference.manifest["identifiers"]
     full=Identifier(x=ids["x"],q=ids["q"],u=ids["u"],v=ids["v"],constraints=ids["constraints"])
     constraint_parameters={}

@@ -4,7 +4,7 @@ from brcm import AHU, BEHeatfluxes, BuildingHull, InternalGains, Radiators, Ther
 
 
 def test_complete_building_model_matches_matlab_fixture(matlab_reference):
-    data=ThermalModelData.from_directory("BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data); root="BuildingData/DemoBuilding/EHFM"
+    data=ThermalModelData.from_directory("origin_matlab/toolbox/BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data); root="origin_matlab/toolbox/BuildingData/DemoBuilding/EHFM"
     models=[BuildingHull(data,thermal,"BuildingHull",root+"/buildinghull"),AHU(data,thermal,"AHU1",root+"/ahu"),InternalGains(data,thermal,"IG",root+"/internalgains"),BEHeatfluxes(data,thermal,"TABS",root+"/BEHeatfluxes"),Radiators(data,thermal,"Rad",root+"/radiators")]
     model=compose_building_model(thermal,models); model.discretize(matlab_reference.manifest["sampling_time_hours"])
     expected=matlab_reference.manifest["identifiers"]
@@ -15,7 +15,7 @@ def test_complete_building_model_matches_matlab_fixture(matlab_reference):
 
 
 def test_complete_constraints_and_cost_match_matlab_fixture(matlab_reference):
-    data=ThermalModelData.from_directory("BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data); root="BuildingData/DemoBuilding/EHFM"
+    data=ThermalModelData.from_directory("origin_matlab/toolbox/BuildingData/DemoBuilding/ThermalModel"); thermal=generate_thermal_model(data); root="origin_matlab/toolbox/BuildingData/DemoBuilding/EHFM"
     models=[BuildingHull(data,thermal,"BuildingHull",root+"/buildinghull"),AHU(data,thermal,"AHU1",root+"/ahu"),InternalGains(data,thermal,"IG",root+"/internalgains"),BEHeatfluxes(data,thermal,"TABS",root+"/BEHeatfluxes"),Radiators(data,thermal,"Rad",root+"/radiators")]
     model=compose_building_model(thermal,models); model.set_discretization_step(matlab_reference.manifest["sampling_time_hours"])
     parameters={}; values=matlab_reference.matrices["parameters.constraint_values"].reshape(-1)

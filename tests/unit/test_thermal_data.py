@@ -11,7 +11,7 @@ from brcm.exceptions import ExpressionError, ValidationError
 
 
 ROOT = Path(__file__).parents[2]
-DEMO = ROOT / "BuildingData" / "DemoBuilding" / "ThermalModel"
+DEMO = ROOT / "origin_matlab" / "toolbox" / "BuildingData" / "DemoBuilding" / "ThermalModel"
 
 
 @pytest.fixture()

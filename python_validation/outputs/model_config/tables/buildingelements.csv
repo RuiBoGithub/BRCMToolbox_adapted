@@ -1,7 +1,0 @@
-identifier;description;construction_identifier;adjacent_A;adjacent_B;window_identifier;area;vertices
-B0001;EP Surface Names:West Outside;C0001;AMB;Z0001;W0001;12;(0,0,0),(0,4,0),(0,4,3),(0,0,3)
-B0002;EP Surface Names:West Partition,East Partition;C0004;Z0002;Z0001;;12;(4,0,0),(4,4,0),(4,4,3),(4,0,3)
-B0003;EP Surface Names:East Outside;C0001;AMB;Z0002;;12;(8,4,0),(8,0,0),(8,0,3),(8,4,3)
-B0004;EP Surface Names:West Ground;C0002;GND;Z0001;;16;(0,0,0),(0,4,0),(4,4,0),(4,0,0)
-B0005;EP Surface Names:East Adiabatic;C0003;ADB;Z0002;;16;(4,0,3),(8,0,3),(8,4,3),(4,4,3)
-B0006;West Furniture;C0005;Z0001;Z0001;;3;

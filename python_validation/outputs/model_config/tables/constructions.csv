@@ -1,6 +1,0 @@
-identifier;description;material_identifiers;thickness;conv_coeff_adjacent_A;conv_coeff_adjacent_B
-C0001;Exterior;M0001,M0003,M0004;0.1,0,0;convCoeff_WallExt;convCoeff_WallInt
-C0002;Partition;M0002;0.2;convCoeff_CeilingGND;convCoeff_FloorInt
-C0003;Partition;M0002;0.2;convCoeff_RoofADB;convCoeff_CeilingInt
-C0004;Partition;M0002;0.2;convCoeff_WallInt;convCoeff_WallInt
-C0005;Partition;M0002;0.2;convCoeff_InternalMass;convCoeff_InternalMass

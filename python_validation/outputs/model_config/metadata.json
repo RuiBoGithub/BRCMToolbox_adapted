@@ -1,9 +1,0 @@
-{
-  "source_idf": "tests/fixtures/energyplus/representative_multizone.idf",
-  "energyplus_version": "8.1",
-  "idd_file": "V8-1-0-Energy+.idd",
-  "sampling_time_hours": 0.016666666666666666,
-  "initial_state_definition": "Uniform 20 degC for every thermal state",
-  "ehf_declarations": [],
-  "building_model_note": "BuildingModel generated with no EHF declarations."
-}
