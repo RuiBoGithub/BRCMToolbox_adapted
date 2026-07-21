@@ -26,17 +26,17 @@ classdef Radiators < EHFModelBaseClass
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(3);        % Number of properties required for object instantation
-      multiIncludeOk@logical = false;
+      n_properties uint64 = uint64(3);        % Number of properties required for object instantation
+      multiIncludeOk logical = false;
       
       % Model specific conventions
-      radiator_name_str@char = 'Radiators';  % Name of the model
-      radiator_identifier@char = 'rad';     % Model signal label tag
+      radiator_name_str char = 'Radiators';  % Name of the model
+      radiator_identifier char = 'rad';     % Model signal label tag
       
       % Required file header for the specific model data file
-      radiator_file_header@cell =  {'zone_identifier' 'control_identifier'}; % make sure this coincides with below
-      header_zone_id_str@char = 'zone_identifier';
-      header_u_id_str@char = 'control_identifier';
+      radiator_file_header cell =  {'zone_identifier' 'control_identifier'}; % make sure this coincides with below
+      header_zone_id_str char = 'zone_identifier';
+      header_u_id_str char = 'control_identifier';
       
    end
    properties(Access=private)

@@ -26,23 +26,23 @@ classdef BEHeatfluxes < EHFModelBaseClass
    
    properties(Hidden,Constant)
       
-      n_properties@uint64 = uint64(3);                                  % Number of properties required for object instantation
-      multiIncludeOk@logical = false;
+      n_properties uint64 = uint64(3);                                  % Number of properties required for object instantation
+      multiIncludeOk logical = false;
       
       % Model specific conventions
-      BEHeatfluxes_name_str@char = 'BE heatfluxes';                   % Name of the model
-      BEHeatfluxes_identifier@char = 'BEH';                           % Short name of the model
+      BEHeatfluxes_name_str char = 'BE heatfluxes';                   % Name of the model
+      BEHeatfluxes_identifier char = 'BEH';                           % Short name of the model
       
       % Required file header for the specific model data file
-      BEHeatfluxes_file_header@cell =  {'buildingelement_identifier' 'layer_number' 'control_identifier','heating_cooling_selection'};
-      header_be_id_str@char = 'buildingelement_identifier';
-      header_layer_str@char = 'layer_number';
-      header_u_id_str@char = 'control_identifier';
-      header_hcsel_str@char = 'heating_cooling_selection';
+      BEHeatfluxes_file_header cell =  {'buildingelement_identifier' 'layer_number' 'control_identifier','heating_cooling_selection'};
+      header_be_id_str char = 'buildingelement_identifier';
+      header_layer_str char = 'layer_number';
+      header_u_id_str char = 'control_identifier';
+      header_hcsel_str char = 'heating_cooling_selection';
       
       % signal labels
-      heating_str@char = 'heat';
-      cooling_str@char = 'cool';
+      heating_str char = 'heat';
+      cooling_str char = 'cool';
       
    end
    

@@ -28,18 +28,18 @@ classdef Window
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(6);    % number of properties required for object instance
-      key@char = 'W';                   % identifier key, first letter of the identifier, e.g. W0001
+      n_properties uint64 = uint64(6);    % number of properties required for object instance
+      key char = 'W';                   % identifier key, first letter of the identifier, e.g. W0001
    end % properties(Constant,Hidden)
    
       properties(SetAccess = {?ThermalModelData,?Building}) % IF_WITH_METACLASS_SUPPORT
    %properties % IF_NO_METACLASS_SUPPORT
-      identifier@char = '';             % identifier of the window, e.g. W0001
-      description@char = '';            % window description
-      glass_area@char = '0';            % window glass area [m^2]
-      frame_area@char = '0';            % window frame area [m^2]
-      U_value@char = '';                % U-value, heat transfer coefficient [W/m^2K]
-      SHGC@char = '';                   % Solar Heat Gain Coefficient [%]
+      identifier char = '';             % identifier of the window, e.g. W0001
+      description char = '';            % window description
+      glass_area char = '0';            % window glass area [m^2]
+      frame_area char = '0';            % window frame area [m^2]
+      U_value char = '';                % U-value, heat transfer coefficient [W/m^2K]
+      SHGC char = '';                   % Solar Heat Gain Coefficient [%]
    end % properties
    
       methods(Access = {?ThermalModelData,?Building})% IF_WITH_METACLASS_SUPPORT

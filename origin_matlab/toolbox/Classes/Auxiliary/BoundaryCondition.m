@@ -25,9 +25,9 @@ classdef BoundaryCondition
    
        properties (SetAccess = {?Building}) % IF_WITH_METACLASS_SUPPORT
    %properties % IF_NO_METACLASS_SUPPORT
-      identifier_1@char = '';   % State identifier of an adjacent zone.
-      identifier_2@char = '';   % State identifier of first/last layer of a building element or a disturbance input identifier.
-      value@double = 0;           % Value (Resistance) that connects the two states.
+      identifier_1 char = '';   % State identifier of an adjacent zone.
+      identifier_2 char = '';   % State identifier of first/last layer of a building element or a disturbance input identifier.
+      value double = 0;           % Value (Resistance) that connects the two states.
    end
    
        methods (Access = {?Building}) % IF_WITH_METACLASS_SUPPORT

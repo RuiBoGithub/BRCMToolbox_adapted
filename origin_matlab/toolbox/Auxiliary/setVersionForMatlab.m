@@ -132,8 +132,9 @@ n_files = length(m_classfiles);
 
 for i = 1:n_files
     
-    % find file
-    path_classfile = which(m_classfiles{i});
+    % The caller supplies absolute filenames. Use them directly so files in
+    % separate @Class or +package scopes cannot be confused by path order.
+    path_classfile = m_classfiles{i};
     
     % check if is class file: Skip file and issue a warning that is not a
     % class file
@@ -195,10 +196,13 @@ for i = 1:n_files
         L_out{j} = line;
     end
     
-    fid = fopen(m_classfiles{i},'w');
+    fid = fopen(path_classfile,'w');
+    if fid == -1
+        error('setVersionForMatlab:WriteFailed', ...
+            'Cannot update class file ''%s''.', path_classfile);
+    end
     fprintf(fid,'%s\n',L_out{:});
     fclose(fid);
 end
 
 end
-

@@ -19,10 +19,31 @@ if exist(output_directory, 'dir') ~= 7
     mkdir(output_directory);
 end
 
-addpath(genpath(toolbox_directory));
-old_directory = pwd;
-cleanup_directory = onCleanup(@() cd(old_directory)); %#ok<NASGU>
-cd(toolbox_directory);
+% Modernize legacy declarations before MATLAB attempts to parse any BRCM
+% class, then put this exact toolbox at the front of the search path.
+addpath(fullfile(toolbox_directory, 'Auxiliary'), '-begin');
+applyModernMatlabCompatibility(toolbox_directory);
+addpath(genpath(toolbox_directory), '-begin');
+rehash path
+
+expected_building = fullfile(toolbox_directory, 'Classes', '@Building', 'Building.m');
+building_definitions = which('Building', '-all');
+if ischar(building_definitions)
+    building_definitions = cellstr(building_definitions);
+elseif isstring(building_definitions)
+    building_definitions = cellstr(building_definitions);
+end
+if isempty(building_definitions)
+    error('export_brcm_reference:BuildingNotFound', ...
+        'Building is not available after adding toolbox: %s', toolbox_directory);
+end
+if numel(building_definitions) ~= 1 || ...
+        ~strcmp(building_definitions{1}, expected_building)
+    error('export_brcm_reference:AmbiguousBuilding', ...
+        ['Expected only %s, but which Building -all returned:\n%s\n' ...
+         'Remove conflicting BRCM/Building definitions from the MATLAB path.'], ...
+        expected_building, strjoin(building_definitions, newline));
+end
 
 global g_debugLvl
 g_debugLvl = -1;

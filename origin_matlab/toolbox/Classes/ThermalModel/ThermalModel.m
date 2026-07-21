@@ -28,14 +28,14 @@ classdef ThermalModel
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(1);    % number of required properties for instantation of object
+      n_properties uint64 = uint64(1);    % number of required properties for instantation of object
    end % properties(Constant,Hidden)
    
        properties (SetAccess = {?Building}) % IF_WITH_METACLASS_SUPPORT
    %properties % IF_NO_METACLASS_SUPPORT
-      A@double = [];                      % state space matrix
-      Bq@double = [];                     % heat-flux input q to state x matrix
-      Xcap@double = [];                   % Capacitance matrix
+      A double = [];                      % state space matrix
+      Bq double = [];                     % heat-flux input q to state x matrix
+      Xcap double = [];                   % Capacitance matrix
    end % properties(SetAccess = {?Building})
    
        methods(Access = {?Building}) % IF_WITH_METACLASS_SUPPORT

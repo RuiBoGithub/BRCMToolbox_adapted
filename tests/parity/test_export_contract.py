@@ -20,6 +20,14 @@ def test_exporter_exists_and_uses_public_reference_workflow():
         assert call in source
 
 
+def test_exporter_applies_modern_matlab_compatibility_and_checks_class_scope():
+    source = EXPORTER.read_text(encoding="utf-8")
+    assert "applyModernMatlabCompatibility(toolbox_directory)" in source
+    assert "which('Building', '-all')" in source
+    assert "expected_building" in source
+    assert "export_brcm_reference:AmbiguousBuilding" in source
+
+
 def test_exporter_never_saves_brcm_objects():
     source = EXPORTER.read_text(encoding="utf-8")
     save_lines = [line.strip() for line in source.splitlines() if line.lstrip().startswith("save(")]

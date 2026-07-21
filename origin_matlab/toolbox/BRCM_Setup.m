@@ -25,8 +25,18 @@
 close all; 
 clc;
 
-BRCMRootPath = getBRCMRootPath();
-cd(BRCMRootPath);
+BRCMRootPath = fileparts(mfilename('fullpath'));
+addpath(genpath(BRCMRootPath), '-begin');
+
+% Current MATLAB releases no longer accept the legacy property@type syntax.
+% Rewrite every affected class declaration before loading BRCM classes such
+% as Constants, which setVersionForMatlab itself uses.
+[modernizedFiles, modernizedDeclarations] = ...
+   applyModernMatlabCompatibility(BRCMRootPath);
+if modernizedDeclarations > 0
+   fprintf('Modernized %d property declarations in %d class files.\n', ...
+      modernizedDeclarations, numel(modernizedFiles));
+end
 
 folderName = BRCMRootPath;
 ignoreDirs = {};
@@ -72,4 +82,3 @@ if inp == 'y'
    setVersionForMatlab(mFiles(inds_classdefFiles),currentMatlabVersion);
    
 end
-

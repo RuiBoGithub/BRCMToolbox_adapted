@@ -25,17 +25,17 @@ classdef Zone
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(5);    % number of properties required for an object instance
-      key@char = 'Z';                   % identifier key, first letter of the identifier, e.g. Z0001
+      n_properties uint64 = uint64(5);    % number of properties required for an object instance
+      key char = 'Z';                   % identifier key, first letter of the identifier, e.g. Z0001
    end % properties(Constant,Hidden)
    
        properties (SetAccess = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT properties
    %properties % IF_NO_METACLASS_SUPPORT
-      identifier@char = '';             % identifier of the zone, e.g. Z0001
-      description@char = '';            % description of the zone
-      area@char = '';                   % zone area [m^2]
-      volume@char = '';                 % zone voluem [m^3]
-      group@cell = {};                    % cell of group identifiers to which the zone belongs to
+      identifier char = '';             % identifier of the zone, e.g. Z0001
+      description char = '';            % description of the zone
+      area char = '';                   % zone area [m^2]
+      volume char = '';                 % zone voluem [m^3]
+      group cell = {};                    % cell of group identifiers to which the zone belongs to
    end % properties
    
        methods(Access = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT

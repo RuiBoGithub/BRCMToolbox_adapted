@@ -25,18 +25,18 @@ classdef Material
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(6);    % number of properties required for an object instance
-      key@char = 'M';                   % identifier key, first letter of the identifier, e.g. M0001
+      n_properties uint64 = uint64(6);    % number of properties required for an object instance
+      key char = 'M';                   % identifier key, first letter of the identifier, e.g. M0001
    end % properties(Constant,Hidden)
    
        properties (SetAccess = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT
    %properties % IF_NO_METACLASS_SUPPORT
-      identifier@char = '';             % material identifiers, e.g. M0001
-      description@char = '';            % description of the material
-      specific_heat_capacity@char = '';     % specific heat capacity  [J/kgK]
-      specific_thermal_resistance@char = '';% specific thermal resistance in [mK/W]
-      density@char = '';                % density in [kg/m^3]
-      R_value@char = '';                 % R-Value, used to define no-mass layers (requires specific_heat_capacity, specific_thermal_resistance and density to be empty)
+      identifier char = '';             % material identifiers, e.g. M0001
+      description char = '';            % description of the material
+      specific_heat_capacity char = '';     % specific heat capacity  [J/kgK]
+      specific_thermal_resistance char = '';% specific thermal resistance in [mK/W]
+      density char = '';                % density in [kg/m^3]
+      R_value char = '';                 % R-Value, used to define no-mass layers (requires specific_heat_capacity, specific_thermal_resistance and density to be empty)
    end % properties
    
        methods (Access = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT

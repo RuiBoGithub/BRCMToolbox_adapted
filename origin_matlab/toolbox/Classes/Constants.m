@@ -31,172 +31,172 @@ classdef Constants
    
    properties(Constant)
       % Physics
-      C_air@double = 1012; % heat capacity of air @25degC, [J/kgK]
-      rho_air@double = 1.2041; % density of air @25degC, [kg/m^3]
+      C_air double = 1012; % heat capacity of air @25degC, [J/kgK]
+      rho_air double = 1.2041; % density of air @25degC, [kg/m^3]
       
       % Regexp
       % Matlab version
-      expr_IF_WITH_METACLASS_SUPPORT@char = '%\s*?IF_WITH_METACLASS_SUPPORT';
-      expr_IF_NO_METACLASS_SUPPORT@char = '%\s*?IF_NO_METACLASS_SUPPORT';
-      expr_classdef@char = '^classdef\s*[A-Za-z]\w*';
-      expr_MATLAB_release@char = 'R20\d\d[a-z]';
-      expr_InpFile@char = '.+\.(xls|xlsx|csv)';
-      supported_file_extensions@cell = {'*.xls';'*.xlsx';'*.csv'};
-      expr_zones@char = '^zones.(xls|xlsx|csv)';
-      expr_building_elements@char = '^buildingelements.(xls|xlsx|csv)';
-      expr_constructions@char = '^constructions.(xls|xlsx|csv)';
-      expr_nomass_constructions@char ='^nomassconstructions.(xls|xlsx|csv)';
-      expr_materials@char = '^materials.(xls|xlsx|csv)';
-      expr_windows@char = '^windows.(xls|xlsx|csv)';
-      expr_parameters@char = '^parameters.(xls|xlsx|csv)';
-      expr_identifier_key@char = '\d\d\d\d$';
-      expr_coordinate@char = '[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?';
-      expr_vertices@char = ['(\(','[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?','\,','[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?','\,','[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?','\))'];
+      expr_IF_WITH_METACLASS_SUPPORT char = '%\s*?IF_WITH_METACLASS_SUPPORT';
+      expr_IF_NO_METACLASS_SUPPORT char = '%\s*?IF_NO_METACLASS_SUPPORT';
+      expr_classdef char = '^classdef\s*[A-Za-z]\w*';
+      expr_MATLAB_release char = 'R20\d\d[a-z]';
+      expr_InpFile char = '.+\.(xls|xlsx|csv)';
+      supported_file_extensions cell = {'*.xls';'*.xlsx';'*.csv'};
+      expr_zones char = '^zones.(xls|xlsx|csv)';
+      expr_building_elements char = '^buildingelements.(xls|xlsx|csv)';
+      expr_constructions char = '^constructions.(xls|xlsx|csv)';
+      expr_nomass_constructions char ='^nomassconstructions.(xls|xlsx|csv)';
+      expr_materials char = '^materials.(xls|xlsx|csv)';
+      expr_windows char = '^windows.(xls|xlsx|csv)';
+      expr_parameters char = '^parameters.(xls|xlsx|csv)';
+      expr_identifier_key char = '\d\d\d\d$';
+      expr_coordinate char = '[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?';
+      expr_vertices char = ['(\(','[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?','\,','[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?','\,','[-+]?[0-9]*\.?[0-9]*+([eE][-+]?[0-9]*+)?','\))'];
       
       % Conventions
-      zone_file_header@cell= { 'identifier' 'description' 'area' 'volume' 'group'}; %5
+      zone_file_header cell= { 'identifier' 'description' 'area' 'volume' 'group'}; %5
       building_element_file_header@cell = {'identifier' 'description' 'construction_identifier' 'adjacent_A' 'adjacent_B' ...
          'window_identifier'  'area' 'vertices'}; %8
       construction_file_header@cell = {'identifier' 'description' 'material_identifiers' 'thickness'...
          'conv_coeff_adjacent_A' 'conv_coeff_adjacent_B'}; %6
-      nomass_construction_file_header@cell = {'identifier' 'description' 'U_value'}; % 3
+      nomass_construction_file_header cell = {'identifier' 'description' 'U_value'}; % 3
       material_file_header@cell = {'identifier' 'description' 'specific_heat_capacity' ...
          'specific_thermal_resistance' 'density', 'R_value'}; %5
-      window_file_header@cell = {'identifier' 'description' 'glass_area' 'frame_area' 'U_value' 'SHGC'}; %6
-      parameter_file_header@cell = {'identifier' 'description' 'value'}; %3
-      identifier_key@char = 'dddd';
-      identifier_zero@char = '0000';
-      NULL_str@char = 'NULL';
-      NaN_str@char = 'NaN';
-      ZERO_str@char = '0';
-      EMPTY_str@char = '';
-      num2str_precision@char = '%.10g';
-      release_Matlab_OO@char = 'R2008a';
-      release_Matlab_METACLASS@char = 'R2012a';
+      window_file_header cell = {'identifier' 'description' 'glass_area' 'frame_area' 'U_value' 'SHGC'}; %6
+      parameter_file_header cell = {'identifier' 'description' 'value'}; %3
+      identifier_key char = 'dddd';
+      identifier_zero char = '0000';
+      NULL_str char = 'NULL';
+      NaN_str char = 'NaN';
+      ZERO_str char = '0';
+      EMPTY_str char = '';
+      num2str_precision char = '%.10g';
+      release_Matlab_OO char = 'R2008a';
+      release_Matlab_METACLASS char = 'R2012a';
       
       % element names
-      building_name_str@char = 'Building';
-      buildingmodel_name_str@char = 'Building model';
-      thermalmodel_name_str@char = 'Thermal model';
-      simulation_name_str@char = 'Simulation experiment';
-      zone_name_str@char = 'Zone';
-      buildingelement_name_str@char = 'Building element';
-      construction_name_str@char = 'Construction';
-      nomass_construction_name_str@char = 'No mass construction';
-      material_name_str@char = 'Material';
-      window_name_str@char = 'Window';
-      parameter_name_str@char = 'Parameter';
-      vertex_name_str@char = 'Vertex';
-      layer_name_str@char = 'Layer';
+      building_name_str char = 'Building';
+      buildingmodel_name_str char = 'Building model';
+      thermalmodel_name_str char = 'Thermal model';
+      simulation_name_str char = 'Simulation experiment';
+      zone_name_str char = 'Zone';
+      buildingelement_name_str char = 'Building element';
+      construction_name_str char = 'Construction';
+      nomass_construction_name_str char = 'No mass construction';
+      material_name_str char = 'Material';
+      window_name_str char = 'Window';
+      parameter_name_str char = 'Parameter';
+      vertex_name_str char = 'Vertex';
+      layer_name_str char = 'Layer';
       
       % element class names
-      building_classname_str@char = 'Building';
-      buildingmodel_classname_str@char = 'BuildingModel';
-      simulation_classname_str@char = 'SimulationExperiment';
-      zone_classname_str@char = 'Zone';
-      buildingelement_classname_str@char = 'BuildingElement';
-      construction_classname_str@char = 'Construction';
-      nomass_construction_classname_str@char = 'NoMassConstruction';
-      material_classname_str@char = 'Material';
-      window_classname_str@char = 'Window';
-      parameter_classname_str@char = 'Parameter';
-      vertex_classname_str@char = 'Vertex';
-      layer_classname_str@char = 'Layer';
-      identifier_classname_str@char = 'Identifier';
+      building_classname_str char = 'Building';
+      buildingmodel_classname_str char = 'BuildingModel';
+      simulation_classname_str char = 'SimulationExperiment';
+      zone_classname_str char = 'Zone';
+      buildingelement_classname_str char = 'BuildingElement';
+      construction_classname_str char = 'Construction';
+      nomass_construction_classname_str char = 'NoMassConstruction';
+      material_classname_str char = 'Material';
+      window_classname_str char = 'Window';
+      parameter_classname_str char = 'Parameter';
+      vertex_classname_str char = 'Vertex';
+      layer_classname_str char = 'Layer';
+      identifier_classname_str char = 'Identifier';
       
       % element file names
-      zone_filename@char = 'zones';
-      buildingelement_filename@char = 'buildingelements';
-      construction_filename@char = 'constructions';
-      nomass_construction_filename@char = 'nomassconstructions';
-      material_filename@char = 'materials';
-      window_filename@char = 'windows';
-      parameter_filename@char = 'parameters';
-      fileextension_XLS@char = '.xls';
-      fileextension_CSV@char = '.csv';
+      zone_filename char = 'zones';
+      buildingelement_filename char = 'buildingelements';
+      construction_filename char = 'constructions';
+      nomass_construction_filename char = 'nomassconstructions';
+      material_filename char = 'materials';
+      window_filename char = 'windows';
+      parameter_filename char = 'parameters';
+      fileextension_XLS char = '.xls';
+      fileextension_CSV char = '.csv';
       
       % Special identifiers
-      ground_name_str@char = 'ground';
-      ambient_name_str@char = 'ambient';
-      adiabatic_name_str@char = 'adiabatic';
-      user_defined_name_str@char = 'user_defined';
-      ground_identifier@char = 'GND'; % GND:=GROUND
-      var_ground_identifier@char = 'Tgnd'; % GND:=GROUND
-      ambient_identifier@char = 'AMB'; % AMB:=AMBIENT
-      var_ambient_identifier@char = 'Tamb'; % amb:=AMBIENT
-      adiabatic_identifier@char = 'ADB'; % ADB:=ADIABATIC
-      TBCwFC@char = 'TBCwFC'; % temperature boundary condition with film coefficient 
-      TBCwoFC@char = 'TBCwoFC'; % temperature boundary condition without film coefficient 
-      exterior@cell= {'GND' 'AMB' 'ADB'};
+      ground_name_str char = 'ground';
+      ambient_name_str char = 'ambient';
+      adiabatic_name_str char = 'adiabatic';
+      user_defined_name_str char = 'user_defined';
+      ground_identifier char = 'GND'; % GND:=GROUND
+      var_ground_identifier char = 'Tgnd'; % GND:=GROUND
+      ambient_identifier char = 'AMB'; % AMB:=AMBIENT
+      var_ambient_identifier char = 'Tamb'; % amb:=AMBIENT
+      adiabatic_identifier char = 'ADB'; % ADB:=ADIABATIC
+      TBCwFC char = 'TBCwFC'; % temperature boundary condition with film coefficient 
+      TBCwoFC char = 'TBCwoFC'; % temperature boundary condition without film coefficient 
+      exterior cell= {'GND' 'AMB' 'ADB'};
       
       % Tolerances
-      tol_planarity@double = 0.05; % tolerance for non-planarity of vertices in a building element [m]
-      tol_area@double = 0.01; % tolerance for area, when checking consistency of building elment (floor,ceil) area and associated zone [m^2]
-      tol_height@double = 0.01; % tolerance for the alignment of vertices of a vertical building elment (z-coordinates) [m]
-      tol_norm_vec@double = 0.01; % tolerance for normal vector [m]
+      tol_planarity double = 0.05; % tolerance for non-planarity of vertices in a building element [m]
+      tol_area double = 0.01; % tolerance for area, when checking consistency of building elment (floor,ceil) area and associated zone [m^2]
+      tol_height double = 0.01; % tolerance for the alignment of vertices of a vertical building elment (z-coordinates) [m]
+      tol_norm_vec double = 0.01; % tolerance for normal vector [m]
       
       % Variable names
-      state_variable@char = 'x';
-      layer_state_variable@char = 's';
-      heat_flux_variable@char = 'q';
-      input_variable@char = 'u';
-      disturbance_variable@char = 'v';
-      output_variable@char = 'y';
+      state_variable char = 'x';
+      layer_state_variable char = 's';
+      heat_flux_variable char = 'q';
+      input_variable char = 'u';
+      disturbance_variable char = 'v';
+      output_variable char = 'y';
       
       % External heat flux model
-      EHF_model_str@char = 'EHF model';
+      EHF_model_str char = 'EHF model';
       
-      identifier_str@char = 'identifier';
+      identifier_str char = 'identifier';
 
       % Simulation
-      sim_default_str@char = 'default';
-      sim_inputTrajectory_str@char = 'inputTrajectory';
-      sim_handle_str@char = 'handle';
+      sim_default_str char = 'default';
+      sim_inputTrajectory_str char = 'inputTrajectory';
+      sim_handle_str char = 'handle';
       
       % TODO: these depend on time vector and current matrix B
-      default_amplitude@double = 5; % ?C
-      default_period_hrs@double = 10;
+      default_amplitude double = 5; % ?C
+      default_period_hrs double = 10;
       
       % Draw Building
-      z_label@char = 'z';
-      y_label@char = 'y (North)';
-      x_label@char = 'x (East)';
-      zone_label_FontSize@double = 18;
-      aspect_ratio@double = [1 1 1];
-      view3d@double = 3;
-      view2d@double = 2;
-      view2d_str@char = 'Floorplan';
-      view3d_str@char = '3-D';
-      noLabels@char = 'NoLabels';
-      noBELabels@char = 'NoBELabels';
-      noZoneLabels@char = 'NoZoneLabels';
+      z_label char = 'z';
+      y_label char = 'y (North)';
+      x_label char = 'x (East)';
+      zone_label_FontSize double = 18;
+      aspect_ratio double = [1 1 1];
+      view3d double = 3;
+      view2d double = 2;
+      view2d_str char = 'Floorplan';
+      view3d_str char = '3-D';
+      noLabels char = 'NoLabels';
+      noBELabels char = 'NoBELabels';
+      noZoneLabels char = 'NoZoneLabels';
       
-      legend_edge_width@double = 2;
+      legend_edge_width double = 2;
       
       % Colors for plots
-      state_color@double = [0 0 1]; % blue
-      building_element_color@double = [1 1 0]; % yellow
-      building_element_nomass_color@double = [0.4 0 0]; % brown
-      building_element_edge_color@double = [1 0.6 0]; % orange
-      window_color@double = [0.2 1 1]; % turquise
-      window_edge_color@double = [0 0 1]; % blue
-      alpha_transparency@double = 0.05;
-      vertex_color@double = [1 0 0]; % red
-      vertex_size@double = 50;
+      state_color double = [0 0 1]; % blue
+      building_element_color double = [1 1 0]; % yellow
+      building_element_nomass_color double = [0.4 0 0]; % brown
+      building_element_edge_color double = [1 0.6 0]; % orange
+      window_color double = [0.2 1 1]; % turquise
+      window_edge_color double = [0 0 1]; % blue
+      alpha_transparency double = 0.05;
+      vertex_color double = [1 0 0]; % red
+      vertex_size double = 50;
       
       % Plot labels
-      time@char = 'Time [hrs]';
-      temperature@char = 'Temp [?C]';
-      heatflux@char = 'Heat Flux [W]';
-      input_u@char = 'Control input u';
-      input_v@char = 'Disturbance v';
-      output_y@char = 'Output y';
-      tool_box_name@char = 'Building RC-Modelling Toolbox';
-      figure_name_simulation@char = 'Simulation of Building';
-      fig_scale_left@double = 1/16;
-      fig_scale_bottom@double = 1/14;
-      fig_scale_width@double = 6/7;
-      fig_scale_height@double = 6/7;
+      time char = 'Time [hrs]';
+      temperature char = 'Temp [?C]';
+      heatflux char = 'Heat Flux [W]';
+      input_u char = 'Control input u';
+      input_v char = 'Disturbance v';
+      output_y char = 'Output y';
+      tool_box_name char = 'Building RC-Modelling Toolbox';
+      figure_name_simulation char = 'Simulation of Building';
+      fig_scale_left double = 1/16;
+      fig_scale_bottom double = 1/14;
+      fig_scale_width double = 6/7;
+      fig_scale_height double = 6/7;
    end %properties(Constant)
    
    % We do not allow an instantion of this object

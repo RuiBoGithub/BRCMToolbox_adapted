@@ -26,32 +26,32 @@ classdef SimulationExperiment < handle
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(1);     % number of properties required for object instantation
+      n_properties uint64 = uint64(1);     % number of properties required for object instantation
    end % properties(Constant,Hidden)
    
    properties(Hidden,SetAccess=private)
-      figure_position@double;              % screen size and postion for plot
-      figure_handles@double;               % collect figure handles
-      figure_handles_objects@matlab.graphics.Graphics;  % fix for MATLAB2014b+
-      data_directory_target@char = '';   % remember directory when writing simulation data
+      figure_position double;              % screen size and postion for plot
+      figure_handles double;               % collect figure handles
+      figure_handles_objects matlab.graphics.Graphics;  % fix for MATLAB2014b+
+      data_directory_target char = '';   % remember directory when writing simulation data
    end % properties(Hidden)
    
    properties(Access=private)
       
-      building@Building;                   % building for which the simulation will be done
-      building_variable_name@char;       % variable name of the associated building
+      building Building;                   % building for which the simulation will be done
+      building_variable_name char;       % variable name of the associated building
       
-      Ts_hrs@double;                       % Simulation time step is [hrs]
-      n_simulation_time_steps@double;      % number of simulation steps
+      Ts_hrs double;                       % Simulation time step is [hrs]
+      n_simulation_time_steps double;      % number of simulation steps
       
-      t_hrs@double;                        % Time vector
+      t_hrs double;                        % Time vector
       
-      x0@double;                           % Initial state
-      X@double;                            % State sequence matrix
-      Q@double;                            % Input Q sequence matrix
-      U@double;                            % Input U sequence matrix
-      V@double;                            % Input V sequence matrix
-      Y@double;                            % Output sequence matrix
+      x0 double;                           % Initial state
+      X double;                            % State sequence matrix
+      Q double;                            % Input Q sequence matrix
+      U double;                            % Input U sequence matrix
+      V double;                            % Input V sequence matrix
+      Y double;                            % Output sequence matrix
       
       default_input_q_handle = @SimulationExperiment.default_input_q_generator;
       input_q_trajectory_handle = @SimulationExperiment.input_q_trajectory_generator;
@@ -63,8 +63,8 @@ classdef SimulationExperiment < handle
       
       % flag indicating if data is available for plot and write, will be set to
       % true when at least one simulation is run successfully
-      plot_enabled@logical = false;
-      write_enabled@logical = false;
+      plot_enabled logical = false;
+      write_enabled logical = false;
       
    end
    

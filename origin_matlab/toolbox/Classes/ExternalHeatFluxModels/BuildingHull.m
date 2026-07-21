@@ -26,37 +26,37 @@ classdef BuildingHull < EHFModelBaseClass
    
    properties(Hidden,Constant)
       
-      n_properties@uint64 = uint64(3);        % Number of properties required for object instantation
-      multiIncludeOk@logical = false;
+      n_properties uint64 = uint64(3);        % Number of properties required for object instantation
+      multiIncludeOk logical = false;
       
       % Model specific conventions
-      building_hull_name_str@char = 'Building hull';    % name of model
-      blind_name_str@char = 'Blind';                    % blind control signal label tag
-      solGlobFac_name_str@char = 'SolGlobFac';          % facade solar group signal label tag
+      building_hull_name_str char = 'Building hull';    % name of model
+      blind_name_str char = 'Blind';                    % blind control signal label tag
+      solGlobFac_name_str char = 'SolGlobFac';          % facade solar group signal label tag
       
       % Required file headers for the specific model data file
-      windowSpecs_header@cell = {'window_solar_group' 'buildingelement_identifier' 'disturbance_identifier' 'control_identifier' 'secondary_gains_fraction'};
+      windowSpecs_header cell = {'window_solar_group' 'buildingelement_identifier' 'disturbance_identifier' 'control_identifier' 'secondary_gains_fraction'};
       %         windowSpecs_header@cell = {'window_solar_group' 'buildingelement_identifier' 'disturbance_identifier' 'control_identifier' 'secondary_gains_fraction' 'thermal_resistance [m^2K/W]'};
-      facadeSpecs_header@cell = {'facade_solar_group' 'buildingelement_identifier' 'disturbance_identifier' 'absorptance'};
-      infiltrationSpecs_header@cell = {'infiltration_specification','zone_identifier','airchangerate'};
-      header_be_id_str@char = 'buildingelement_identifier';
-      header_u_id_str@char = 'control_identifier';
-      header_airchangerate_str@char = 'airchangerate';
-      header_zone_id_str@char = 'zone_identifier';
-      header_v_id_str@char = 'disturbance_identifier';
-      header_secGainsFrac_str@char = 'secondary_gains_fraction';
-      header_absorp_str@char = 'absorptance';
+      facadeSpecs_header cell = {'facade_solar_group' 'buildingelement_identifier' 'disturbance_identifier' 'absorptance'};
+      infiltrationSpecs_header cell = {'infiltration_specification','zone_identifier','airchangerate'};
+      header_be_id_str char = 'buildingelement_identifier';
+      header_u_id_str char = 'control_identifier';
+      header_airchangerate_str char = 'airchangerate';
+      header_zone_id_str char = 'zone_identifier';
+      header_v_id_str char = 'disturbance_identifier';
+      header_secGainsFrac_str char = 'secondary_gains_fraction';
+      header_absorp_str char = 'absorptance';
       
-      solarDisturbanceLabel@char = 'solGlobFac';
-      blindsInputLabel@char = 'blinds';
-      bposMinConstraintLabel@char = 'blindsMin';
-      bposMaxConstraintLabel@char = 'blindsMax';
+      solarDisturbanceLabel char = 'solGlobFac';
+      blindsInputLabel char = 'blinds';
+      bposMinConstraintLabel char = 'blindsMin';
+      bposMaxConstraintLabel char = 'blindsMax';
       
       % properties for constraints generation in order to identify the
       % and find the specific parameter field
-      t@char = 't';
-      blind_pos_min@char = 'blind_pos_min';
-      blind_pos_max@char = 'blind_pos_max';
+      t char = 't';
+      blind_pos_min char = 'blind_pos_min';
+      blind_pos_max char = 'blind_pos_max';
       
    end
    

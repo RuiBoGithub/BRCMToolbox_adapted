@@ -27,32 +27,32 @@ classdef Building < matlab.mixin.Copyable
    
    
    properties(SetAccess=private)
-      identifier@char;                              % Identifier of the building
+      identifier char;                              % Identifier of the building
    end
    
    properties(SetObservable,Hidden)
-      thermal_model_data_consistent@logical = false;  % flag indicating if the property thermal_model_data is consistent
-      building_model_consistent@logical = false;      % flag indicating if the property building_model is consistent
+      thermal_model_data_consistent logical = false;  % flag indicating if the property thermal_model_data is consistent
+      building_model_consistent logical = false;      % flag indicating if the property building_model is consistent
    end
    
    properties(Hidden,SetAccess=private)
-      figure_position@double;     % specifies the position of figures, e.g. when executing drawBuilding
+      figure_position double;     % specifies the position of figures, e.g. when executing drawBuilding
       
       % collect figure handles
-      figure_handles@double;      % collection of all object specific figure handles
-      figure_handles_objects@matlab.graphics.Graphics;  % fix for MATLAB2014b+
+      figure_handles double;      % collection of all object specific figure handles
+      figure_handles_objects matlab.graphics.Graphics;  % fix for MATLAB2014b+
       
    end % properties(Hidden)
    
        properties(SetAccess = {?Building,?SimulationExperiment})% IF_WITH_METACLASS_SUPPORT
    %properties % IF_NO_METACLASS_SUPPORT
-      building_model@BuildingModel;            % stores the building model
-      thermal_model_data@ThermalModelData;     % stores all the relevant thermal model data
+      building_model BuildingModel;            % stores the building model
+      thermal_model_data ThermalModelData;     % stores all the relevant thermal model data
       
       % Struct that holds information for generation of an EHF Model
       % classfile:    Matlab m-file of the EHF-submodel class
       % file:         path to the source file (.xls,.xlsx)
-      EHF_model_declarations@struct = struct('class_file',{},'source_file',{},'EHF_identifier',{});
+      EHF_model_declarations struct = struct('class_file',{},'source_file',{},'EHF_identifier',{});
    end % properties(SetAccess = {?Building,?SimulationExperiment})
    
    methods

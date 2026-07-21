@@ -42,18 +42,18 @@ classdef Construction
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(6);       % number of properties required for an object instance
-      key@char = 'C';                      % identifier key, first letter of the identifier, e.g. C0001
+      n_properties uint64 = uint64(6);       % number of properties required for an object instance
+      key char = 'C';                      % identifier key, first letter of the identifier, e.g. C0001
    end % properties(Constant,Hidden)
    
        properties (SetAccess = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT
    %properties % IF_NO_METACLASS_SUPPORT
-      identifier@char = '';                 % identifier of the construction type, e.g. C0001
-      description@char = '';                % description of the identifier
-      material_identifiers@cell;              % List of layer materials
-      thickness@cell;                         % List of layer thicknesses.
-      conv_coeff_adjacent_A@char = '';      % Convective heat transfer coefficient [W/m^2K]
-      conv_coeff_adjacent_B@char = '';      % Convective heat transfer coefficient [W/m^2K]
+      identifier char = '';                 % identifier of the construction type, e.g. C0001
+      description char = '';                % description of the identifier
+      material_identifiers cell;              % List of layer materials
+      thickness cell;                         % List of layer thicknesses.
+      conv_coeff_adjacent_A char = '';      % Convective heat transfer coefficient [W/m^2K]
+      conv_coeff_adjacent_B char = '';      % Convective heat transfer coefficient [W/m^2K]
    end % properties
    
        methods (Access = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT

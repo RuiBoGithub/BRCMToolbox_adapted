@@ -27,12 +27,12 @@ classdef Identifier
    
    
    properties
-      x@cell = {};            % Identifiers for the x-state
-      q@cell = {};            % Identifiers for the q-state
-      u@cell = {};            % Identifiers for the u control inputs
-      v@cell = {};            % Identifiers for the v disturbance inputs
-      y@cell = {};            % Identifiers for the y outputs
-      constraints@cell = {};  % Identifiers for the constraints
+      x cell = {};            % Identifiers for the x-state
+      q cell = {};            % Identifiers for the q-state
+      u cell = {};            % Identifiers for the u control inputs
+      v cell = {};            % Identifiers for the v disturbance inputs
+      y cell = {};            % Identifiers for the y outputs
+      constraints cell = {};  % Identifiers for the constraints
    end
    
    methods

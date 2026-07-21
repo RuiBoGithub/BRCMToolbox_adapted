@@ -26,66 +26,66 @@ classdef AHU < EHFModelBaseClass
    
    properties(Hidden,Constant)
       
-      n_properties@uint64 = uint64(3);   % number of required properties for object instantion
-      multiIncludeOk@logical = true;
+      n_properties uint64 = uint64(3);   % number of required properties for object instantion
+      multiIncludeOk logical = true;
       
       % Model specific conventions
-      AHU_EHF_name_str@char = 'Air handling unit';                                         % model name
-      AHU_key@char = 'AHU';                                                                % model specific key
-      AHU_spec_file_header@cell = {'AHU_specification' 'key' 'value'};                       % header for the AHU specification data file
+      AHU_EHF_name_str char = 'Air handling unit';                                         % model name
+      AHU_key char = 'AHU';                                                                % model specific key
+      AHU_spec_file_header cell = {'AHU_specification' 'key' 'value'};                       % header for the AHU specification data file
       AHU_airflow_spec_file_header@cell = ...
          {'airflow_specification' 'zone_identifier' 'flow_fraction' 'from_identifier'};      % header for the airflow specification in the data file
-      header_key_str@char = 'key';
-      header_value_str@char = 'value';
-      header_zone_identifier_str@char = 'zone_identifier';
-      header_flow_fraction_str@char = 'flow_fraction';
-      header_from_identifier_str@char = 'from_identifier';
+      header_key_str char = 'key';
+      header_value_str char = 'value';
+      header_zone_identifier_str char = 'zone_identifier';
+      header_flow_fraction_str char = 'flow_fraction';
+      header_from_identifier_str char = 'from_identifier';
       
       % AHU key specifications
-      hasERC_str@char = 'hasERC';                                  % heat exchanger(ERC) tag for the parsing of the AHU specification
-      ERCefficiency_str@char = 'ERCefficiency';                    % heat exchanger(ERC) efficiency tag
-      hasEvapCooler_str@char = 'hasEvapCooler';                    % evaporative cooler tag
-      evapCoolerEfficiency_str@char = 'EvapCoolerEfficiency';      % evaporative cooler efficiency tag
-      hasHeater_str@char = 'hasHeater';                            % heater tag
-      hasCooler_str@char = 'hasCooler';                            % cooler tag
-      has_AHU_Tin_str@char = 'has_AHU_Tin';                        % source temperature tag
-      AHU_Tin_str@char = 'Tin';                                    % source temperature tag
+      hasERC_str char = 'hasERC';                                  % heat exchanger(ERC) tag for the parsing of the AHU specification
+      ERCefficiency_str char = 'ERCefficiency';                    % heat exchanger(ERC) efficiency tag
+      hasEvapCooler_str char = 'hasEvapCooler';                    % evaporative cooler tag
+      evapCoolerEfficiency_str char = 'EvapCoolerEfficiency';      % evaporative cooler efficiency tag
+      hasHeater_str char = 'hasHeater';                            % heater tag
+      hasCooler_str char = 'hasCooler';                            % cooler tag
+      has_AHU_Tin_str char = 'has_AHU_Tin';                        % source temperature tag
+      AHU_Tin_str char = 'Tin';                                    % source temperature tag
       
       % signal specifications
-      ERC_str@char = 'ERC';
-      noERC_str@char = 'noERC';
-      evapCooler_str@char = 'evapCooler';
-      deltaWB_str@char = 'Dwb';
-      heater_str@char = 'heater';
-      cooler_str@char = 'cooler';
+      ERC_str char = 'ERC';
+      noERC_str char = 'noERC';
+      evapCooler_str char = 'evapCooler';
+      deltaWB_str char = 'Dwb';
+      heater_str char = 'heater';
+      cooler_str char = 'cooler';
       
       % properties for constraints generation in order to identify constraint and cost parameter fields
-      mdot_min_str@char = 'mdot_min';
-      mdot_max_str@char = 'mdot_max';
-      Q_heat_min_str@char = 'Q_heat_min';
-      Q_heat_max_str@char = 'Q_heat_max';
-      Q_cool_min_str@char = 'Q_cool_min';
-      Q_cool_max_str@char = 'Q_cool_max';
-      T_supply_min_str@char = 'T_supply_min';
-      T_supply_max_str@char = 'T_supply_max';
-      v_fullModel_str@char = 'v_fullModel';
-      mdotERC_nonneg_str@char = 'mdotERC_nonneg';
-      mdotNoERC_nonneg_str@char = 'mdotNoERC_nonneg';
-      evapCooler_nonneg_str@char = 'evapCooler_nonneg';
-      evapCooler_max_str@char = 'evapCooler_max';
-      x_str@char = 'x';
+      mdot_min_str char = 'mdot_min';
+      mdot_max_str char = 'mdot_max';
+      Q_heat_min_str char = 'Q_heat_min';
+      Q_heat_max_str char = 'Q_heat_max';
+      Q_cool_min_str char = 'Q_cool_min';
+      Q_cool_max_str char = 'Q_cool_max';
+      T_supply_min_str char = 'T_supply_min';
+      T_supply_max_str char = 'T_supply_max';
+      v_fullModel_str char = 'v_fullModel';
+      mdotERC_nonneg_str char = 'mdotERC_nonneg';
+      mdotNoERC_nonneg_str char = 'mdotNoERC_nonneg';
+      evapCooler_nonneg_str char = 'evapCooler_nonneg';
+      evapCooler_max_str char = 'evapCooler_max';
+      x_str char = 'x';
       
    end
    
    properties(SetAccess=private)
       
-      has_AHU_Tin@logical = false;                                                                 % flag indicating if sourc temperature to AHU is different from ambient
-      hasERC@logical = false;                                                                      % flag indicating if AHU has a heat exchanger
-      ERCefficiency@double = 0;                                                                    % efficiency of the heat exchanger
-      hasHeater@logical = false;                                                                   % flag indicating if AHU has a heater
-      hasCooler@logical = false;                                                                   % flag indicating if AHU has a cooler
-      hasEvapCooler@logical = false;                                                               % flag indicating if AHU has an evaporative Cooler
-      evapCoolerEfficiency@double = 0;                                                             % efficiency of the evaporative cooler
+      has_AHU_Tin logical = false;                                                                 % flag indicating if sourc temperature to AHU is different from ambient
+      hasERC logical = false;                                                                      % flag indicating if AHU has a heat exchanger
+      ERCefficiency double = 0;                                                                    % efficiency of the heat exchanger
+      hasHeater logical = false;                                                                   % flag indicating if AHU has a heater
+      hasCooler logical = false;                                                                   % flag indicating if AHU has a cooler
+      hasEvapCooler logical = false;                                                               % flag indicating if AHU has an evaporative Cooler
+      evapCoolerEfficiency double = 0;                                                             % efficiency of the evaporative cooler
       return_zones = struct('identifier',{},'total_return_flow_fraction',{});                      % stores the AHU return zones and their flow fraction
       supply_zones = struct('identifier',{},'total_supply_flow_fraction',{});                      % stores the AHU supply zones and their flow fraction
       airflowSpecs = struct('zone_identifier',{},'flow_fraction',{},'from_identifier',{});         % stores full airflow specification

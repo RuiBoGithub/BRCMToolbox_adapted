@@ -25,14 +25,14 @@ classdef Parameter
    
    
    properties(Hidden,Constant)
-      n_properties@uint64 = uint64(3);
+      n_properties uint64 = uint64(3);
    end % properties(Constant,Hidden)
    
       properties (SetAccess = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT
    %properties % IF_NO_METACLASS_SUPPORT
-      identifier@char = '';
-      description@char = '';
-      value@char = '0'; % since we support 'NULL'
+      identifier char = '';
+      description char = '';
+      value char = '0'; % since we support 'NULL'
    end % properties
    
       methods (Access = {?ThermalModelData}) % IF_WITH_METACLASS_SUPPORT
