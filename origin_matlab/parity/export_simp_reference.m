@@ -49,8 +49,15 @@ convertIDFToBRCM(idf_file, conversion_directory, true);
 
 B = Building('simp');
 B.loadThermalModelData(conversion_directory);
-% Re-export the seven loaded conversion tables as deterministic CSV files.
-B.writeThermalModelData(table_directory, true, true);
+% Re-export all seven loaded conversion tables as deterministic CSV files.
+% The parity helper emits schema-only tables for valid empty optional data.
+tables = safeConvertThermalModelDataToCells(B.thermal_model_data);
+table_names = {'zones', 'buildingelements', 'constructions', 'materials', ...
+    'windows', 'parameters', 'nomassconstructions'};
+for i = 1:length(table_names)
+    name = table_names{i};
+    writeCellToFile(tables.(name), fullfile(table_directory, name), true);
+end
 B.generateThermalModel();
 
 A = B.building_model.thermal_submodel.A;
