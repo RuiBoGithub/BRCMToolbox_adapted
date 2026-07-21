@@ -7,7 +7,7 @@ from ..exceptions import ValidationError
 
 SUPPORTED_OBJECT_TYPES=(
  "Version","GlobalGeometryRules","Zone","Material","Material:NoMass","Material:AirGap","Material:InfraredTransparent",
- "Construction","Construction:InternalSource","InternalMass","BuildingSurface:Detailed","FenestrationSurface:Detailed",
+ "Construction","Construction:InternalSource","Construction:WindowDataFile","InternalMass","BuildingSurface:Detailed","FenestrationSurface:Detailed",
  "WindowProperty:FrameAndDivider","SurfaceProperty:OtherSideCoefficients",
  "Wall:Exterior","Wall:Adiabatic","Wall:Underground","Wall:Interzone","Wall:Detailed","Roof","Ceiling:Adiabatic",
  "Ceiling:Interzone","Floor:GroundContact","Floor:Adiabatic","Floor:Interzone","Floor:Detailed","RoofCeiling:Detailed","Window",
@@ -44,31 +44,50 @@ def normalize_idf_objects(objects: list[IDFObject]) -> NormalizedEnergyPlusModel
         for o in by_type.get(kind,[]):
             layers=list(o.values[1:] if kind=='construction' else o.values[5:]); layers=[x for x in layers if x]
             model.constructions.append(EPConstruction(_at(o,0),layers))
-    def vertices(o,base,count_index,zone_name):
-        count=int(_num(_at(o,count_index),0)); raw=o.values[base:base+3*count]
+    def vertices(o,legacy_base,legacy_count_index,zone_name):
+        count=int(_num(_field(o,'Number of Vertices',legacy_count_index),0))
+        base=next((i for i,name in enumerate(o.field_names)
+                   if name.casefold().startswith('vertex 1 x-')),legacy_base)
+        raw=o.values[base:base+3*count]
         if count<3 or len(raw)!=3*count: raise ValidationError(f"Malformed vertices for {_at(o,0)}")
         local=tuple(tuple(float(raw[3*i+j]) for j in range(3)) for i in range(count)); zone=zone_map.get(zone_name.casefold())
         if zone is None: raise ValidationError(f"Unknown zone {zone_name!r}")
         return to_world(local,zone.origin,zone.north,coordinate)
     for o in by_type.get('buildingsurface:detailed',[]):
-        boundary=_at(o,4); outside=_at(o,5); allowed=('adiabatic','surface','zone','outdoors','ground','othersidecoefficients')
+        name=_field(o,'Name',0); surface_type=_field(o,'Surface Type',1)
+        construction=_field(o,'Construction Name',2); zone_name=_field(o,'Zone Name',3)
+        boundary=_field(o,'Outside Boundary Condition',4)
+        outside=_field(o,'Outside Boundary Condition Object',5)
+        allowed=('adiabatic','surface','zone','outdoors','ground','othersidecoefficients')
         if boundary.casefold() not in allowed: raise ValidationError(f"Unsupported outside boundary {boundary!r}")
         if boundary.casefold()=='othersidecoefficients':
             osc=next((x for x in by_type.get('surfaceproperty:othersidecoefficients',[]) if _at(x,0).casefold()==outside.casefold()),None)
             if osc is None: raise ValidationError(f"Unknown OtherSideCoefficients {outside!r}")
             coefficient=_num(_field(osc,'Combined Convective/Radiative Film Coefficient',1)); outside=f"{outside};Combined Convective/Radiative Film Coefficient[{coefficient:g}]"
-        model.surfaces.append(EPSurface(_at(o,0),_at(o,1),_at(o,2),_at(o,3),boundary,outside,vertices(o,10,9,_at(o,3))))
-    frames={_at(o,0).casefold():_num(_at(o,1),0) for o in by_type.get('windowproperty:frameanddivider',[])}
+        model.surfaces.append(EPSurface(name,surface_type,construction,zone_name,boundary,outside,
+                                       vertices(o,10,9,zone_name)))
+    frames={_field(o,'Name',0).casefold():_num(_field(o,'Frame Width',1),0)
+            for o in by_type.get('windowproperty:frameanddivider',[])}
     parent_map={s.name.casefold():s for s in model.surfaces}
     for o in by_type.get('fenestrationsurface:detailed',[]):
-        if _at(o,1).casefold()!='window': continue
-        parent=parent_map.get(_at(o,3).casefold())
-        if parent is None: raise ValidationError(f"Unknown fenestration parent {_at(o,3)!r}")
-        verts=vertices(o,9,8,parent.zone); multiplier=_num(_at(o,7),1); frame=frames.get(_at(o,6).casefold(),0)
+        surface_type=_field(o,'Surface Type',1)
+        if surface_type.casefold() not in ('window','glassdoor'): continue
+        parent_name=_field(o,'Building Surface Name',3)
+        parent=parent_map.get(parent_name.casefold())
+        if parent is None: raise ValidationError(f"Unknown fenestration parent {parent_name!r}")
+        verts=vertices(o,9,8,parent.zone)
+        multiplier=_num(_field(o,'Multiplier',7),1)
+        frame_name=_field(o,'Frame and Divider Name',6)
+        frame=frames.get(frame_name.casefold(),0)
         area_points=list(verts); zs=[p[2] for p in area_points]; height=max(zs)-min(zs); from .geometry import polygon_area
         area=polygon_area(verts); width=area/height if height else 0; frame_area=(frame*2*(height+width)+4*frame**2)*multiplier
-        model.windows.append(EPWindow(_at(o,0),_at(o,2),parent.name,verts,frame_area,area*multiplier))
-    for o in by_type.get('internalmass',[]): model.internal_masses.append(EPInternalMass(_at(o,0),_at(o,1),_at(o,2),_num(_at(o,3))))
+        model.windows.append(EPWindow(_field(o,'Name',0),_field(o,'Construction Name',2),parent.name,
+                                     verts,frame_area,area*multiplier))
+    for o in by_type.get('internalmass',[]):
+        zone_name=_field(o,'Zone Name',2) or _field(o,'Zone or ZoneList Name',2)
+        model.internal_masses.append(EPInternalMass(
+            _field(o,'Name',0),_field(o,'Construction Name',1),zone_name,
+            _num(_field(o,'Surface Area',3))))
     legacy={
       'wall:exterior':('Wall','Outdoors'),'wall:adiabatic':('Wall','Adiabatic'),'wall:underground':('Wall','Ground'),'wall:interzone':('Wall','Surface'),
       'roof':('Roof','Outdoors'),'ceiling:adiabatic':('Ceiling','Adiabatic'),'ceiling:interzone':('Ceiling','Surface'),
@@ -99,7 +118,8 @@ def normalize_idf_objects(objects: list[IDFObject]) -> NormalizedEnergyPlusModel
         model.windows.append(EPWindow(_field(o,'Name',0),_field(o,'Construction Name',1),parent,(),frame_area,height*length*multiplier))
     thermal_prefixes=('material','construction','zone','buildingsurface','fenestrationsurface','wall:','floor:','ceiling:','roof','internalmass','window')
     known={x.casefold() for x in SUPPORTED_OBJECT_TYPES}|{'building','timestep','simulationcontrol','runperiod'}
-    ignored_prefixes=('windowmaterial:','windowproperty:','shading:','materialproperty:')
+    ignored_prefixes=('windowmaterial:','windowproperty:','shading:','materialproperty:',
+                      'zonehvac:','zonecontrol:','zoneinfiltration:')
     ignored=sorted({o.object_type for o in objects if o.object_type.casefold().startswith(ignored_prefixes) and o.object_type.casefold() not in known})
     model.ignored_object_types=tuple(ignored)
     if ignored: warnings.warn(f"Ignoring MATLAB-unsupported EnergyPlus objects: {ignored}",UserWarning,stacklevel=2)

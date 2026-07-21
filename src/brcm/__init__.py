@@ -24,7 +24,13 @@ from .thermal_model import ThermalModel
 from .ehf import AHU, BEHeatfluxes, BuildingHull, EHFModelBaseClass, EHF_REGISTRY, InternalGains, Radiators
 from .building_model import BuildingModel, ContinuousModel, DiscreteModel, compose_building_model, generate_building_model
 from .simulation import BuildingSimulationResult, SimulationExperiment, ThermalSimulationResult, simulate_bm, simulate_building_model, simulate_tm, simulate_thermal_model
-from .energyplus import audit_conversion, convert_idf_to_brcm, convert_idf_to_brcm_data, from_energyplus
+from .energyplus import (
+    audit_conversion,
+    conversion_to_thermal_model_data,
+    convert_idf_to_brcm,
+    convert_idf_to_brcm_data,
+    from_energyplus,
+)
 
 __all__ = [
     "BoundaryCondition", "BuildingElement", "Constants", "Construction",
@@ -36,6 +42,7 @@ __all__ = [
     "BuildingModel", "ContinuousModel", "DiscreteModel", "compose_building_model", "generate_building_model",
     "BuildingSimulationResult", "SimulationExperiment", "ThermalSimulationResult",
     "simulate_bm", "simulate_building_model", "simulate_tm", "simulate_thermal_model",
-    "audit_conversion", "convert_idf_to_brcm", "convert_idf_to_brcm_data", "from_energyplus",
+    "audit_conversion", "conversion_to_thermal_model_data", "convert_idf_to_brcm",
+    "convert_idf_to_brcm_data", "from_energyplus",
     "load_reference_fixture",
 ]

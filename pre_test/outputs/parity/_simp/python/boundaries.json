@@ -1,5 +1,31 @@
 {
-  "ambient": [],
+  "ambient": [
+    {
+      "identifier_1": "AMB",
+      "identifier_2": "x_Z0001",
+      "value": 27.717664989937067
+    },
+    {
+      "identifier_1": "AMB",
+      "identifier_2": "x_Z0001",
+      "value": 27.717664989937067
+    },
+    {
+      "identifier_1": "AMB",
+      "identifier_2": "x_Z0001",
+      "value": 27.717664989937067
+    },
+    {
+      "identifier_1": "AMB",
+      "identifier_2": "x_Z0001",
+      "value": 27.717664989937067
+    },
+    {
+      "identifier_1": "AMB",
+      "identifier_2": "x_Z0001",
+      "value": 41.02766295707472
+    }
+  ],
   "adiabatic": [
     {
       "identifier_1": "x_B0005_L1_s1_ADBZ0001",
@@ -8,31 +34,5 @@
     }
   ],
   "ground": [],
-  "user_defined": [
-    {
-      "identifier_1": "x_AMB",
-      "identifier_2": "x_Z0001",
-      "value": 27.717664989937067
-    },
-    {
-      "identifier_1": "x_AMB",
-      "identifier_2": "x_Z0001",
-      "value": 27.717664989937067
-    },
-    {
-      "identifier_1": "x_AMB",
-      "identifier_2": "x_Z0001",
-      "value": 27.717664989937067
-    },
-    {
-      "identifier_1": "x_AMB",
-      "identifier_2": "x_Z0001",
-      "value": 27.717664989937067
-    },
-    {
-      "identifier_1": "x_AMB",
-      "identifier_2": "x_Z0001",
-      "value": 41.02766295707472
-    }
-  ]
+  "user_defined": []
 }

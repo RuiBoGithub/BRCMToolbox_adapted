@@ -8,15 +8,20 @@ from .sheets import generate_brcm_tables
 from ..io import write_semicolon_table
 from ..thermal_data import ThermalModelData
 
-def convert_idf_to_brcm_data(idf_path: str|Path,parser: EnergyPlusParser|None=None) -> ConversionResult:
+def convert_idf_to_brcm_data(idf_path: str|Path,parser: EnergyPlusParser|None=None,
+                             idd_path: str|Path|None=None) -> ConversionResult:
+    if parser is not None and idd_path is not None:
+        raise ValueError("Pass either parser or idd_path, not both")
     path=Path(idf_path)
     with warnings.catch_warnings(record=True) as caught:
         warnings.simplefilter("always")
-        objects=(parser or LegacyIDDParser()).parse(path); normalized=normalize_idf_objects(objects)
+        objects=(parser or LegacyIDDParser(idd_path=idd_path)).parse(path); normalized=normalize_idf_objects(objects)
     return ConversionResult(generate_brcm_tables(normalized),normalized,path,tuple(str(item.message) for item in caught))
 
-def convert_idf_to_brcm(idf_path: str|Path,output_directory: str|Path,parser: EnergyPlusParser|None=None,overwrite: bool=False) -> ConversionResult:
-    result=convert_idf_to_brcm_data(idf_path,parser); output=Path(output_directory)
+def convert_idf_to_brcm(idf_path: str|Path,output_directory: str|Path,
+                        parser: EnergyPlusParser|None=None,overwrite: bool=False,
+                        idd_path: str|Path|None=None) -> ConversionResult:
+    result=convert_idf_to_brcm_data(idf_path,parser,idd_path); output=Path(output_directory)
     if output.exists() and any(output.iterdir()) and not overwrite: raise FileExistsError(f"Output directory is not empty: {output}")
     output.mkdir(parents=True,exist_ok=True)
     for name,rows in result.tables.items(): write_semicolon_table(output/f"{name}.csv",rows)
@@ -35,10 +40,11 @@ def audit_conversion(result: ConversionResult,thermal_model=None) -> ConversionA
         result.normalized_model.ignored_object_types,result.warnings,
     )
 
-def from_energyplus(idf_path: str|Path,parser: EnergyPlusParser|None=None):
+def from_energyplus(idf_path: str|Path,parser: EnergyPlusParser|None=None,
+                    idd_path: str|Path|None=None):
     """Thin in-memory IDF → BRCM tables → ThermalModelData → ThermalModel path."""
     from ..thermal_generation import generate_thermal_model
-    result=convert_idf_to_brcm_data(idf_path,parser)
+    result=convert_idf_to_brcm_data(idf_path,parser,idd_path)
     return generate_thermal_model(conversion_to_thermal_model_data(result))
 
 convertIDFToBRCM=convert_idf_to_brcm

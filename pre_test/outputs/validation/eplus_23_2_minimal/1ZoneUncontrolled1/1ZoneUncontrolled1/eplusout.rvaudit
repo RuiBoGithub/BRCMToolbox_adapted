@@ -1,0 +1,16 @@
+ ReadVarsESO
+ processing:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1.rvi
+ input file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1/eplusout.eso
+ output file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1/eplusout.csv
+ getting all vars from:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1/eplusout.eso
+  number variables requested for output=          17
+ ReadVars Run Time=00hr 00min  0.01sec
+ ReadVarsESO program completed successfully.
+ ReadVarsESO
+ processing:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1.mvi
+ input file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1/eplusout.mtr
+ output file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1/eplusmtr.csv
+ getting all vars from:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/1ZoneUncontrolled1/1ZoneUncontrolled1/eplusout.mtr
+  number variables requested for output=           2
+ ReadVars Run Time=00hr 00min  0.01sec
+ ReadVarsESO program completed successfully.

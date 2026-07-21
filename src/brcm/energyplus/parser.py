@@ -7,7 +7,7 @@ import warnings
 from .records import IDFObject
 from ..exceptions import DataFormatError
 
-SUPPORTED_VERSIONS=("7.0","7.1","7.2","8.0","8.1")
+SUPPORTED_VERSIONS=("7.0","7.1","7.2","8.0","8.1","23.2")
 
 def _strip_comments(text: str) -> str:
     lines=[]
@@ -58,26 +58,54 @@ def parse_idd(path: str|Path) -> dict[str,tuple[str,...]]:
     if current is not None: result[current.casefold()]=tuple(labels)
     return result
 
+def get_idd_version(path: str|Path) -> str|None:
+    """Read the EnergyPlus version declared by an IDD header."""
+    with Path(path).open(encoding='latin-1') as stream:
+        for _ in range(20):
+            line=stream.readline()
+            if not line: break
+            match=re.match(r'!IDD_Version\s+(\S+)',line.strip(),re.IGNORECASE)
+            if match: return match.group(1)
+    return None
+
 class EnergyPlusParser(ABC):
     @abstractmethod
     def parse(self,source: str|Path) -> list[IDFObject]: ...
 
 class LegacyIDDParser(EnergyPlusParser):
-    def __init__(self,idd_directory: str|Path|None=None):
+    def __init__(self,idd_directory: str|Path|None=None,idd_path: str|Path|None=None):
+        if idd_directory is not None and idd_path is not None:
+            raise ValueError("Pass either idd_directory or idd_path, not both")
         self.idd_directory=Path(idd_directory) if idd_directory else Path(__file__).parents[3]/'origin_matlab'/'toolbox'/'EP2BRCM'/'IDDFiles'
+        self.idd_path=Path(idd_path) if idd_path else None
     def parse(self,source):
         objects,_=get_idf_objects(source); version=next((o.values[0] for o in objects if o.object_type.casefold()=='version'),None)
         if not version: raise DataFormatError("IDF has no Version object")
-        newer_eight=version.startswith('8.') and not version.startswith(('8.0','8.1'))
-        prefix='8.1' if newer_eight else next((v for v in SUPPORTED_VERSIONS if version.startswith(v)),None)
-        if prefix is None: raise DataFormatError(f"Unsupported EnergyPlus version {version}")
-        if newer_eight:
-            warnings.warn(f"Using the bundled EnergyPlus 8.1 IDD for version {version}, matching MATLAB legacy behavior",UserWarning,stacklevel=2)
-        names={'7.0':'V7-0-0-Energy+.idd','7.1':'V7-1-0-Energy+.idd','7.2':'V7-2-0-Energy+.idd','8.0':'V8-0-0-Energy+.idd','8.1':'V8-1-0-Energy+.idd'}
-        labels=parse_idd(self.idd_directory/names[prefix]); extended=[]
+        if self.idd_path is not None:
+            resolved_idd=self.idd_path
+        elif version.startswith('23.2'):
+            resolved_idd=Path(__file__).parents[3]/'_E+'/'idd'/'23.2'/'Energy+.idd'
+        else:
+            newer_eight=version.startswith('8.') and not version.startswith(('8.0','8.1'))
+            prefix='8.1' if newer_eight else next((v for v in SUPPORTED_VERSIONS[:5] if version.startswith(v)),None)
+            if prefix is None: raise DataFormatError(f"Unsupported EnergyPlus version {version}; pass idd_path explicitly")
+            if newer_eight:
+                warnings.warn(f"Using the bundled EnergyPlus 8.1 IDD for version {version}, matching MATLAB legacy behavior",UserWarning,stacklevel=2)
+            names={'7.0':'V7-0-0-Energy+.idd','7.1':'V7-1-0-Energy+.idd','7.2':'V7-2-0-Energy+.idd','8.0':'V8-0-0-Energy+.idd','8.1':'V8-1-0-Energy+.idd'}
+            resolved_idd=self.idd_directory/names[prefix]
+        if not resolved_idd.is_file():
+            raise DataFormatError(f"EnergyPlus IDD does not exist for version {version}: {resolved_idd}")
+        if self.idd_path is not None:
+            declared=get_idd_version(resolved_idd)
+            requested='.'.join(version.split('.')[:2])
+            actual='.'.join(declared.split('.')[:2]) if declared else None
+            if actual != requested:
+                raise DataFormatError(
+                    f"EnergyPlus IDF version {version} does not match IDD version {declared or 'unknown'}: {resolved_idd}")
+        labels=parse_idd(resolved_idd); extended=[]
         for obj in objects:
             field_names=labels.get(obj.object_type.casefold())
-            if field_names is None: raise DataFormatError(f"Object {obj.object_type!r} not found in bundled IDD")
+            if field_names is None: raise DataFormatError(f"Object {obj.object_type!r} not found in resolved IDD {resolved_idd}")
             # Detailed surfaces are extensible; synthesize vertex labels beyond the IDD base declaration.
             names_for_object=list(field_names)
             if obj.object_type.casefold() in ('buildingsurface:detailed','fenestrationsurface:detailed'):
@@ -87,6 +115,9 @@ class LegacyIDDParser(EnergyPlusParser):
                     names_for_object.append(f"Vertex {n} {axis}-coordinate")
             extended.append(IDFObject(obj.object_type,obj.values,tuple(names_for_object[:len(obj.values)])))
         return extended
+
+# The adapter now handles both legacy and explicitly supplied modern IDDs.
+IDDParser=LegacyIDDParser
 
 getObjectsFromString=get_objects_from_string
 getIDFObjects=get_idf_objects

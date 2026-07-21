@@ -1,0 +1,16 @@
+ ReadVarsESO
+ processing:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer.rvi
+ input file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer/eplusout.eso
+ output file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer/eplusout.csv
+ getting all vars from:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer/eplusout.eso
+  number variables requested for output=          65
+ ReadVars Run Time=00hr 00min  0.03sec
+ ReadVarsESO program completed successfully.
+ ReadVarsESO
+ processing:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer.mvi
+ input file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer/eplusout.mtr
+ output file:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer/eplusmtr.csv
+ getting all vars from:/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/outputs/validation/eplus_23_2_minimal/5Zone_Transformer/eplusout.mtr
+  number variables requested for output=           7
+ ReadVars Run Time=00hr 00min  0.01sec
+ ReadVarsESO program completed successfully.

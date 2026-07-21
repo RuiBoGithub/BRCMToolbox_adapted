@@ -165,12 +165,14 @@ def generate_thermal_model(data: ThermalModelData) -> ThermalModel:
                 ]
             else:
                 bcs = [BoundaryCondition(), BoundaryCondition(
-                    f"x_{element.adjacent_A}", f"x_{element.adjacent_B}" if _is_zone(element.adjacent_B) else element.adjacent_B,
+                    f"x_{element.adjacent_A}" if _is_zone(element.adjacent_A) else element.adjacent_A,
+                    f"x_{element.adjacent_B}" if _is_zone(element.adjacent_B) else element.adjacent_B,
                     1.0 / (last_r + 1.0 / (area * h_a) + 1.0 / (area * h_b)))
                 ]
         else:
             bcs = [BoundaryCondition(), BoundaryCondition(
-                f"x_{element.adjacent_A}", f"x_{element.adjacent_B}" if _is_zone(element.adjacent_B) else element.adjacent_B,
+                f"x_{element.adjacent_A}" if _is_zone(element.adjacent_A) else element.adjacent_A,
+                f"x_{element.adjacent_B}" if _is_zone(element.adjacent_B) else element.adjacent_B,
                 1.0 / last_r
             )]
 
