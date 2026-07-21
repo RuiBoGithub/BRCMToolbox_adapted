@@ -112,18 +112,18 @@
     No,                      !- Do Zone Sizing Calculation
     No,                      !- Do System Sizing Calculation
     No,                      !- Do Plant Sizing Calculation
-    Yes,                     !- Run Simulation for Sizing Periods
-    No,                      !- Run Simulation for Weather File Run Periods
+    No,                     !- Run Simulation for Sizing Periods
+    Yes,                      !- Run Simulation for Weather File Run Periods
     No,                      !- Do HVAC Sizing Simulation for Sizing Periods
     1;                       !- Maximum Number of HVAC Sizing Simulation Passes
 
   RunPeriod,
     Run Period 1,            !- Name
-    1,                       !- Begin Month
+    4,                       !- Begin Month
     1,                       !- Begin Day of Month
     ,                        !- Begin Year
-    12,                      !- End Month
-    31,                      !- End Day of Month
+    4,                      !- End Month
+    5,                      !- End Day of Month
     ,                        !- End Year
     Tuesday,                 !- Day of Week for Start Day
     Yes,                     !- Use Weather File Holidays and Special Days
@@ -244,7 +244,7 @@
 
   Construction:WindowDataFile,
     DoubleClear,             !- Name
-    ..\datasets\Window5DataFile.dat;  !- File Name
+    /Applications/EnergyPlus-23-2-0/DataSets/Window5DataFile.dat;  !- File Name
 
   Site:GroundTemperature:BuildingSurface,18.89,18.92,19.02,19.12,19.21,19.23,19.07,19.32,19.09,19.21,19.13,18.96;
 
@@ -429,3 +429,32 @@
   Output:Table:SummaryReports,
     AllSummary;              !- Report 1 Name
 
+
+Output:Variable,*,Site Outdoor Air Drybulb Temperature,timestep;
+Output:Variable,*,Site Ground Temperature,timestep;
+Output:Variable,*,Site Sky Temperature,timestep;
+Output:Variable,*,Site Direct Solar Radiation Rate per Area,timestep;
+Output:Variable,*,Site Diffuse Solar Radiation Rate per Area,timestep;
+Output:Variable,*,Zone Mean Air Temperature,timestep;
+Output:Variable,*,Surface Inside Face Temperature,timestep;
+Output:Variable,*,Surface Outside Face Temperature,timestep;
+Output:Variable,*,Surface Outside Face Outdoor Air Drybulb Temperature,timestep;
+Output:Variable,*,Surface Inside Face Convection Heat Transfer Coefficient,timestep;
+Output:Variable,*,Surface Outside Face Convection Heat Transfer Coefficient,timestep;
+Output:Variable,*,Surface Outside Face Thermal Radiation to Sky Heat Transfer Coefficient,timestep;
+Output:Variable,*,Surface Outside Face Thermal Radiation to Ground Heat Transfer Coefficient,timestep;
+Output:Variable,*,Surface Outside Face Net Thermal Radiation Heat Gain Rate,timestep;
+Output:Variable,*,Surface Outside Face Thermal Radiation to Air Heat Transfer Rate,timestep;
+Output:Variable,*,Surface Outside Face Incident Solar Radiation Rate per Area,timestep;
+Output:Variable,*,Surface Outside Face Solar Radiation Heat Gain Rate,timestep;
+Output:Variable,*,Surface Window Transmitted Solar Radiation Rate,timestep;
+Output:Variable,*,Surface Window Net Heat Transfer Rate,timestep;
+Output:Variable,*,Zone Windows Total Transmitted Solar Radiation Rate,timestep;
+Output:Variable,*,Zone Total Internal Convective Heating Rate,timestep;
+Output:Variable,*,Zone Total Internal Radiant Heating Rate,timestep;
+Output:Variable,*,Zone Air Heat Balance Outdoor Air Transfer Rate,timestep;
+Output:Variable,*,Zone Air Heat Balance Interzone Air Transfer Rate,timestep;
+Output:Variable,*,Zone Air Heat Balance System Air Transfer Rate,timestep;
+Output:Variable,*,Zone Air Heat Balance Surface Convection Rate,timestep;
+Output:Variable,*,Zone Air Heat Balance Internal Convective Heat Gain Rate,timestep;
+Output:Variable,*,Zone Air Heat Balance Air Energy Storage Rate,timestep;

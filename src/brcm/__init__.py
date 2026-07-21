@@ -1,6 +1,12 @@
-"""BRCM Python migration package.
+"""Public API for IDF conversion, BRCM model assembly, and simulation.
 
-Stage 1 intentionally exposes only MATLAB parity-fixture loading helpers.
+The usual workflow is ``convert_idf_to_brcm_data`` →
+``conversion_to_thermal_model_data`` → ``generate_thermal_model``.  Construct
+the required EHF models (:class:`BuildingHull`, :class:`InternalGains`,
+:class:`Radiators`, :class:`BEHeatfluxes`, or :class:`AHU`) from configuration
+files, compose them with :class:`BuildingModel`, set a sampling time in hours,
+and simulate with identifier-by-time input matrices.  See the concrete EHF
+class documentation for generated identifiers and units.
 """
 
 from .constants import Constants

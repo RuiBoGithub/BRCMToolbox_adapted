@@ -1,7 +1,22 @@
-"""Dense external-heat-flux submodels from the MATLAB BRCM toolbox.
+"""External-heat-flux (EHF) models used to assemble a :class:`BuildingModel`.
 
-Tensor axes preserve MATLAB semantics: ``Bq_xu[q, x, u]`` and
-``Bq_vu[q, v, u]``.  All thermal rows use the Stage 3 model ordering.
+Every public EHF constructor has the same arguments::
+
+    Model(thermal_data, thermal_model, identifier, source_file)
+
+``source_file`` is a semicolon-delimited BRCM CSV file (or an XLS/XLSX file)
+containing the tables documented on the concrete class.  ``identifier`` names
+that EHF instance; it is especially significant for :class:`AHU`, whose input
+and disturbance identifiers include it.
+
+The heat-flux equation is
+``q = Aq*x + Bq_u*u + Bq_v*v + sum_i(Bq_xu[:,:,i]*x*u_i +
+Bq_vu[:,:,i]*v*u_i)``.  Tensor axes are ``[q, x, u]`` and ``[q, v, u]``.
+Temperatures are in degC (temperature differences are K), heat fluxes in W,
+irradiance and areal gains in W/m2, mass flow in kg/s, and BRCM simulation
+times in hours.  Rows and columns always follow the corresponding
+``model.identifiers`` lists; trajectory matrices use identifiers by rows and
+time steps by columns.
 """
 
 from __future__ import annotations
@@ -123,6 +138,13 @@ class EHFModelBaseClass(ABC):
 
 
 class InternalGains(EHFModelBaseClass):
+    """Map areal internal-gain disturbances to zone heat fluxes.
+
+    The source table is ``(zone_identifier, disturbance_identifier)``.  A row
+    creates disturbance ``v_IG_<disturbance>`` in W/m2 and adds
+    ``zone.area * v`` W to ``q_<zone>``.  Reusing a disturbance identifier
+    drives all of its listed zones with the same areal trajectory.
+    """
     def __init__(self, data, thermal_model, identifier, source_file):
         super().__init__(data, thermal_model, identifier, source_file)
         tables, _ = get_data_tables_from_file(self.source_file, ("zone_identifier", "disturbance_identifier"))
@@ -152,6 +174,12 @@ def _bounded_constraints(model: EHFModelBaseClass, parameters: Mapping[str, Any]
 
 
 class Radiators(EHFModelBaseClass):
+    """Apply controlled areal heating to zone air nodes.
+
+    The source table is ``(zone_identifier, control_identifier)``.  Non-empty
+    controls create ``u_rad_<control>`` in W/m2; each listed zone receives
+    ``zone.area * u`` W.  Shared controls act on every associated zone.
+    """
     def __init__(self, data, thermal_model, identifier, source_file):
         super().__init__(data, thermal_model, identifier, source_file)
         tables, _ = get_data_tables_from_file(self.source_file, ("zone_identifier", "control_identifier"))
@@ -172,6 +200,15 @@ class Radiators(EHFModelBaseClass):
 
 
 class BEHeatfluxes(EHFModelBaseClass):
+    """Apply controlled areal heating or cooling inside massive constructions.
+
+    The table columns are ``buildingelement_identifier``, one-based
+    ``layer_number``, ``control_identifier``, and ``h`` or ``c``.  Inputs are
+    ``u_BEH_<control>_heat`` or ``u_BEH_<control>_cool`` in W/m2.  Heating is
+    positive and cooling is subtracted after multiplication by element area.
+    The selected layer must correspond to a generated massive-state heat-flux
+    identifier.
+    """
     def __init__(self, data, thermal_model, identifier, source_file):
         super().__init__(data, thermal_model, identifier, source_file)
         header = ("buildingelement_identifier", "layer_number", "control_identifier", "heating_cooling_selection")
@@ -219,7 +256,24 @@ def _outer_q(model: EHFModelBaseClass, element) -> tuple[str | None, str | None]
 
 
 class BuildingHull(EHFModelBaseClass):
-    """Ambient/ground conduction, opaque/window solar gain and infiltration."""
+    """Ambient/ground conduction, solar gains, windows, and infiltration.
+
+    ``facade_solar_group`` rows contain building element, disturbance suffix,
+    and exterior solar absorptance (0..1).  They create
+    ``v_solGlobFac_<suffix>`` in W/m2 and require the element to have a massive
+    state.  ``window_solar_group`` rows additionally contain an optional blind
+    control suffix and secondary-gain fraction (0..1); every window-bearing
+    building element must appear exactly once.  A control creates dimensionless
+    ``u_blinds_<suffix>``; with no control, solar gain is linear in irradiance.
+    ``infiltration_specification`` rows contain zone and air changes per hour.
+
+    Temperature disturbances are ``v_Tamb`` and, when present, ``v_Tgnd`` or
+    ``v_<user-boundary>`` in degC.  Infiltration uses ``ACH*volume/3600`` and
+    the package air density and heat capacity constants.  The model computes
+    window conduction from U-value and window solar gain from SHGC; EnergyPlus
+    window heat-transfer or transmitted-solar outputs are validation signals,
+    not inputs to this model.
+    """
     def __init__(self, data, thermal_model, identifier, source_file):
         super().__init__(data, thermal_model, identifier, source_file)
         headers = [
@@ -309,6 +363,22 @@ class BuildingHull(EHFModelBaseClass):
 
 
 class AHU(EHFModelBaseClass):
+    """Bilinear air-handling-unit heat flux model.
+
+    The source contains ``AHU_specification(key, value)`` and
+    ``airflow_specification(zone_identifier, flow_fraction, from_identifier)``.
+    Required keys are ``hasERC``, ``ERCefficiency``, ``hasEvapCooler``,
+    ``EvapCoolerEfficiency``, ``hasHeater``, ``hasCooler``, and
+    ``has_AHU_Tin``.  Fractions supplied from ``AHU`` and inter-zone transfer
+    fractions are dimensionless; computed return fractions must sum to one.
+
+    ``u_<id>_noERC``, ``u_<id>_ERC``, and ``u_<id>_evapCooler`` are air mass
+    flows in kg/s.  Heater and cooler inputs are non-negative W, with cooler
+    heat subtracted by the model.  ``v_<id>_Tin`` (or ``v_Tamb``) and optional
+    ``v_<id>_Dwb`` are degC.  The mass-flow/temperature products are represented
+    in ``Bq_xu`` and ``Bq_vu``; callers must supply raw values, not premultiplied
+    heat fluxes.
+    """
     multi_include_ok = True
     def __init__(self, data, thermal_model, identifier, source_file):
         super().__init__(data, thermal_model, identifier, source_file)

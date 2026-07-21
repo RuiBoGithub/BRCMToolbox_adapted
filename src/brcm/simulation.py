@@ -53,7 +53,13 @@ def _thermal_discrete(model: ThermalModel, sampling_time_hours: float):
 
 
 def simulate_tm(model: ThermalModel, sampling_time_hours: float, x0, n_steps: int, generator: Callable):
-    """Low-level thermal engine; callback is ``q = f(x_column,t_hours,identifiers)``."""
+    """Run a thermal model with ``q = f(x_column, t_hours, identifiers)``.
+
+    ``x0`` is ``(nx, 1)`` (a length-``nx`` vector is accepted); callback heat
+    flux is ``(nq, 1)`` in W.  Returned trajectory arrays use identifiers by
+    rows and time steps by columns.  ``X`` has ``n_steps`` columns while
+    ``X_full`` also includes the final post-input state.
+    """
     if not isinstance(n_steps,(int,np.integer)) or isinstance(n_steps,bool) or n_steps<=0: raise ValidationError("Number of simulation steps must be a positive integer")
     nx,nq=len(model.state_identifiers),len(model.heat_flux_identifiers); state=_column(x0,nx,"x0")
     ad,bd=_thermal_discrete(model,sampling_time_hours); times=np.arange(n_steps,dtype=float)*sampling_time_hours
@@ -65,7 +71,13 @@ def simulate_tm(model: ThermalModel, sampling_time_hours: float, x0, n_steps: in
 
 
 def simulate_bm(model: BuildingModel, x0, n_steps: int, generator: Callable):
-    """Low-level full engine; callback is ``(u,v) = f(x_column,t_hours,identifiers)``."""
+    """Run a BuildingModel with ``(u, v) = f(x, t_hours, identifiers)``.
+
+    Callback columns must have shapes ``(nu, 1)`` and ``(nv, 1)`` in the exact
+    identifier order.  The function does not infer units or transpose arrays.
+    Units are defined by the contributing EHF model; temperatures are degC and
+    time is hours.  Result matrices use identifiers by rows and steps by columns.
+    """
     if model.Ts_hrs is None: raise ValidationError("BuildingModel sampling time is not set")
     if not isinstance(n_steps,(int,np.integer)) or isinstance(n_steps,bool) or n_steps<=0: raise ValidationError("Number of simulation steps must be a positive integer")
     if model.discrete_time_model is None: model.discretize()
@@ -90,7 +102,15 @@ def simulate_bm(model: BuildingModel, x0, n_steps: int, generator: Callable):
 
 
 class SimulationExperiment:
-    """Stateful wrapper preserving the two MATLAB simulation modes."""
+    """Stateful wrapper for callback and precomputed-trajectory simulation.
+
+    A BuildingModel with ``Ts_hrs`` set is required.  In ``inputTrajectory``
+    mode, ``Q``, ``U``, and ``V`` have identifiers on rows and exactly
+    ``n_simulation_time_steps`` columns; inputs are never implicitly transposed.
+    In ``handle`` mode callbacks follow :func:`simulate_tm` or
+    :func:`simulate_bm`.  State vectors are columns, with a one-dimensional
+    vector accepted as a Python convenience.
+    """
     INPUT_TRAJECTORY="inputTrajectory"; HANDLE="handle"
     def __init__(self, building_model: BuildingModel):
         if not isinstance(building_model,BuildingModel): raise ValidationError("SimulationExperiment requires a BuildingModel")
@@ -145,11 +165,13 @@ simulateBM=simulate_bm
 
 
 def simulate_thermal_model(model,sampling_time_hours,x0,Q):
+    """Simulate a ThermalModel from an ``(nq, n_steps)`` heat-flux matrix."""
     Q=np.asarray(Q,dtype=float); n=Q.shape[1] if Q.ndim==2 else 0
     return simulate_tm(model,sampling_time_hours,x0,n,lambda _x,t,_ids:Q[:,int(round(t/sampling_time_hours))])
 
 
 def simulate_building_model(model,x0,U,V):
+    """Simulate a BuildingModel from ``(nu, N)`` and ``(nv, N)`` matrices."""
     U=np.asarray(U,dtype=float); V=np.asarray(V,dtype=float); n=U.shape[1] if U.ndim==2 else 0
     if V.ndim!=2 or V.shape[1]!=n: raise ValidationError("U and V horizons must match")
     return simulate_bm(model,x0,n,lambda _x,t,_ids:(U[:,int(round(t/model.Ts_hrs))],V[:,int(round(t/model.Ts_hrs))]))

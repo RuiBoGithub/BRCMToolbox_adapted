@@ -59,6 +59,15 @@ class DiscreteModel:
 
 
 class BuildingModel:
+    """Thermal model plus one or more EHF models in common identifier order.
+
+    Construct directly as ``BuildingModel(thermal_model, ehf_models)`` when a
+    thermal model has already been generated.  EHF input (``u``), disturbance
+    (``v``), state (``x``), and heat-flux (``q``) identifiers determine matrix
+    row order.  Inputs shared by two EHF instances are rejected; repeated
+    disturbances are merged and sorted.  Set the sampling time in hours with
+    :meth:`set_discretization_step` or :meth:`discretize` before simulation.
+    """
     def __init__(self, thermal_submodel: ThermalModel, ehf_submodels: Sequence[EHFModelBaseClass]):
         self.thermal_submodel = thermal_submodel
         self.EHF_submodels = list(ehf_submodels)
@@ -194,7 +203,11 @@ def compose_building_model(thermal_model: ThermalModel, ehf_models: Sequence[EHF
 def generate_building_model(data: ThermalModelData, declarations: Sequence[tuple[str,str,str|Path]], sampling_time_hours: float | None=None) -> BuildingModel:
     """Generate thermal and declared EHF models without dynamic dispatch.
 
-    Each declaration is ``(registry_name, EHF_identifier, source_file)``.
+    Each declaration is ``(registry_name, EHF_identifier, source_file)`` where
+    ``registry_name`` is one of ``InternalGains``, ``Radiators``,
+    ``BEHeatfluxes``, ``BuildingHull``, or ``AHU``.  This convenience function
+    generates a new ThermalModel; use :class:`BuildingModel` directly to retain
+    an already-generated instance.
     """
     thermal=generate_thermal_model(data); models=[]
     for class_name,identifier,source in declarations:
