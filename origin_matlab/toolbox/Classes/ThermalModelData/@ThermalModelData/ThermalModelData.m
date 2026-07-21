@@ -40,7 +40,7 @@ classdef ThermalModelData < matlab.mixin.Copyable
    
    % stores the current data source path
    properties(SetAccess=private)
-      source_files@struct = struct(Constants.zone_filename,'',Constants.buildingelement_filename,'',Constants.construction_filename,'',...
+      source_files struct = struct(Constants.zone_filename,'',Constants.buildingelement_filename,'',Constants.construction_filename,'',...
          Constants.material_filename,'',Constants.window_filename,'',Constants.parameter_filename,'',Constants.nomass_construction_filename,'');
    end % (SetAccess=private)
    

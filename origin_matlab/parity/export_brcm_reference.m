@@ -23,8 +23,9 @@ end
 % class, then put this exact toolbox at the front of the search path.
 addpath(fullfile(toolbox_directory, 'Auxiliary'), '-begin');
 applyModernMatlabCompatibility(toolbox_directory);
+clear classes
 addpath(genpath(toolbox_directory), '-begin');
-rehash path
+rehash toolboxcache
 
 expected_building = fullfile(toolbox_directory, 'Classes', '@Building', 'Building.m');
 building_definitions = which('Building', '-all');

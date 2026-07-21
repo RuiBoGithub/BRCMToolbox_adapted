@@ -61,7 +61,7 @@ classdef BuildingModel < matlab.mixin.Copyable
        % Boundary conditions for thermal model generation
       % Stores the states x that are connected with
       % 'ADB','AMB','GND' and user-specified disturbances
-      boundary_conditions@struct = struct(Constants.ambient_name_str,BoundaryCondition.empty,Constants.adiabatic_name_str,BoundaryCondition.empty,...
+      boundary_conditions struct = struct(Constants.ambient_name_str,BoundaryCondition.empty,Constants.adiabatic_name_str,BoundaryCondition.empty,...
          Constants.ground_name_str,BoundaryCondition.empty,Constants.user_defined_name_str,BoundaryCondition.empty);
       model_exists logical = false;       % Flag indicating that the complete building model according to the current state of its data has been generated
    end  

@@ -37,6 +37,8 @@ if modernizedDeclarations > 0
    fprintf('Modernized %d property declarations in %d class files.\n', ...
       modernizedDeclarations, numel(modernizedFiles));
 end
+clear classes
+rehash toolboxcache
 
 folderName = BRCMRootPath;
 ignoreDirs = {};

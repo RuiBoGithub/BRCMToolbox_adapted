@@ -19,9 +19,11 @@ end
 class_files = localGetMFiles(class_directory);
 modified_files = {};
 modified_declarations = 0;
+% Match only the declaration prefix. Defaults can continue onto later lines,
+% so requiring a semicolon on this line would miss declarations such as
+% "boundary_conditions@struct = struct(...".
 expression = ['^(\s*)([A-Za-z]\w*)@', ...
-    '([A-Za-z]\w*(?:\.[A-Za-z]\w*)*)', ...
-    '(\s*(?:=[^;]*)?;.*)$'];
+    '([A-Za-z]\w*(?:\.[A-Za-z]\w*)*)(.*)$'];
 replacement = '$1$2 $3$4';
 
 for i = 1:numel(class_files)

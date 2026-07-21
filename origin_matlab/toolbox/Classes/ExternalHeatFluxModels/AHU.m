@@ -33,7 +33,7 @@ classdef AHU < EHFModelBaseClass
       AHU_EHF_name_str char = 'Air handling unit';                                         % model name
       AHU_key char = 'AHU';                                                                % model specific key
       AHU_spec_file_header cell = {'AHU_specification' 'key' 'value'};                       % header for the AHU specification data file
-      AHU_airflow_spec_file_header@cell = ...
+      AHU_airflow_spec_file_header cell = ...
          {'airflow_specification' 'zone_identifier' 'flow_fraction' 'from_identifier'};      % header for the airflow specification in the data file
       header_key_str char = 'key';
       header_value_str char = 'value';
