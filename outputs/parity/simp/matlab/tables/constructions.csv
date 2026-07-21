@@ -1,0 +1,4 @@
+identifier;description;material_identifiers;thickness;conv_coeff_adjacent_A;conv_coeff_adjacent_B;
+C0001;R13WALL;M0002;0;convCoeff_WallExt;convCoeff_WallInt;
+C0002;FLOOR;M0001;0.1015;convCoeff_CeilingADB;convCoeff_FloorInt;
+C0003;ROOF31;M0003;0;convCoeff_RoofExt;convCoeff_CeilingInt;
