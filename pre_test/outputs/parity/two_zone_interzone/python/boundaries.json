@@ -1,0 +1,17 @@
+{
+  "ambient": [
+    {
+      "identifier_1": "x_B0001_L1_s1_AMBZ0001",
+      "identifier_2": "AMB",
+      "value": 66.66666666666667
+    },
+    {
+      "identifier_1": "x_B0003_L1_s1_AMBZ0002",
+      "identifier_2": "AMB",
+      "value": 66.66666666666667
+    }
+  ],
+  "adiabatic": [],
+  "ground": [],
+  "user_defined": []
+}

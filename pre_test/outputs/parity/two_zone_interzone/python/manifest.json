@@ -1,0 +1,16 @@
+{
+  "format": "brcm-case-python-reference",
+  "format_version": 1,
+  "case_name": "two_zone_interzone",
+  "source_idf": "two_zone_interzone.idf",
+  "source_idf_path": "/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/tests/fixtures/energyplus/two_zone_interzone.idf",
+  "normalized_source_path": "/Users/rui.bo/Desktop/BASE/_toolkit/pyBRCMToolbox/pre_test/tests/fixtures/energyplus/two_zone_interzone.idf",
+  "source_idf_sha256": "b323ba15fe770ba48ace27d80834b2096d9fe12f54d720e4e43999a3f2639025",
+  "tables_directory": "tables",
+  "matrix_file": "reference.npz",
+  "sampling_time_hours": 0.25,
+  "number_of_steps": 16,
+  "energyplus_version": "8.1",
+  "implementation": "Python",
+  "python_executed": true
+}

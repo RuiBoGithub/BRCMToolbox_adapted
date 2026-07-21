@@ -1,0 +1,3 @@
+identifier;description;value;
+convCoeff_WallExt;Convective coefficient of a surface to ambient air (default);12.5;
+convCoeff_WallInt;Convective coefficient of wall to zone (default, considering thermal radiation);7;

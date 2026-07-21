@@ -1,0 +1,4 @@
+identifier;description;construction_identifier;adjacent_A;adjacent_B;window_identifier;area;vertices;
+B0001;EP Surface Names:Left Outside;C0001;AMB;Z0001;NaN;12;(0,0,0),(0,4,0),(0,4,3),(0,0,3);
+B0002;EP Surface Names:Left Partition,Right Partition;C0002;Z0002;Z0001;NaN;12;(4,0,0),(4,4,0),(4,4,3),(4,0,3);
+B0003;EP Surface Names:Right Outside;C0001;AMB;Z0002;NaN;12;(8,4,0),(8,0,0),(8,0,3),(8,4,3);

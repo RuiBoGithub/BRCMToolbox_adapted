@@ -1,0 +1,29 @@
+{
+  "case_name": "two_zone_interzone",
+  "source_idf": "two_zone_interzone.idf",
+  "matlab_sha256": "NOT EXECUTED",
+  "python_sha256": "b323ba15fe770ba48ace27d80834b2096d9fe12f54d720e4e43999a3f2639025",
+  "same_input_file": false,
+  "same_case_name": false,
+  "same_idf_filename": false,
+  "tolerances": {
+    "rtol": 1e-10,
+    "atol": 1e-12
+  },
+  "tables": {},
+  "identifiers": {
+    "pass": false,
+    "first_mismatch": "MATLAB output missing"
+  },
+  "boundaries": {
+    "pass": false,
+    "first_mismatch": "MATLAB output missing"
+  },
+  "matrices": {},
+  "simulation": {
+    "pass": false,
+    "first_mismatch": "MATLAB output missing"
+  },
+  "overall_pass": false,
+  "first_mismatch": "MATLAB reference was not executed"
+}
