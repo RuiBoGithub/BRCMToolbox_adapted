@@ -1,6 +1,6 @@
   Processing Schedule Input -- Start
   Processing Schedule Input -- Complete
-found (Current Working Directory)=/Applications/EnergyPlus-23-2-0/DataSets/Window5DataFile.dat
+found (Current Working Directory)=C:\EnergyPlusV23-2-0\DataSets\Window5DataFile.dat
  MonthlyInputCount=           0
  sizeMonthlyInput=           0
  MonthlyFieldSetInputCount=           0
@@ -19,7 +19,7 @@ found (Current Working Directory)=/Applications/EnergyPlus-23-2-0/DataSets/Windo
  numCompSizeTableEntry=           0
  NumOfRVariable=         784
  NumOfRVariable(Total)=         784
- NumOfRVariable(Actual)=          22
+ NumOfRVariable(Actual)=          38
  NumOfRVariable(Summed)=           5
  NumOfRVariable(Meter)=           5
  NumOfIVariable=          60
@@ -38,7 +38,7 @@ found (Current Working Directory)=/Applications/EnergyPlus-23-2-0/DataSets/Windo
  InstMeterCacheSize=        1000
  ClippingAlgorithm=SutherlandHodgman
  MonthlyFieldSetInputCount=           0
- NumConsideredOutputVariables=          15
+ NumConsideredOutputVariables=          25
  MaxConsideredOutputVariables=       10000
  numActuatorsUsed=           0
  numEMSActuatorsAvailable=           0
