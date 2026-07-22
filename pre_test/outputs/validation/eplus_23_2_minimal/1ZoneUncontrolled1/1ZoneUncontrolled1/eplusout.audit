@@ -1,6 +1,6 @@
   Processing Schedule Input -- Start
   Processing Schedule Input -- Complete
-found (Current Working Directory)=/Applications/EnergyPlus-23-2-0/DataSets/Window5DataFile.dat
+found (Current Working Directory)=C:\EnergyPlusV23-2-0\DataSets\Window5DataFile.dat
  MonthlyInputCount=           0
  sizeMonthlyInput=           0
  MonthlyFieldSetInputCount=           0

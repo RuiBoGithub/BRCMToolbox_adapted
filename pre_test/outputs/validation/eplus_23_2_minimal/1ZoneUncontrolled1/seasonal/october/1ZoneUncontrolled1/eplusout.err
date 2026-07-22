@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 23.2.0-7636e6b3e9, YMD=2026.07.21 23:27,
+Program Version,EnergyPlus, Version 23.2.0-7636e6b3e9, YMD=2026.07.22 10:24,
    ** Warning ** RunPeriod: object=RUN PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to SUNDAY.
    ** Warning ** Weather file location will be used rather than entered (IDF) Location object.
    **   ~~~   ** ..Location object=DENVER STAPLETON INTL ARPT CO USA WMO=724690
@@ -24,4 +24,4 @@ Program Version,EnergyPlus, Version 23.2.0-7636e6b3e9, YMD=2026.07.21 23:27,
    ************* Simulation Error Summary *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 4 Warning; 0 Severe Errors; Elapsed Time=00hr 00min  0.18sec
+   ************* EnergyPlus Completed Successfully-- 4 Warning; 0 Severe Errors; Elapsed Time=00hr 00min  0.55sec
