@@ -1,0 +1,214 @@
+\begin{figure}[htbp]
+\centering
+
+\begin{circuitikz}[
+    scale=1.0,
+    transform shape,
+    every node/.style={font=\small}
+]
+
+% ------------------------------------------------
+% Nodes
+% ------------------------------------------------
+
+\coordinate (Tsup) at (0,4);
+\coordinate (Tair) at (4,4);
+
+\coordinate (Te1) at (0,2);
+\coordinate (Ts)  at (4,2);
+
+\coordinate (Te2) at (0,0);
+\coordinate (Tm)  at (4,0);
+
+% ------------------------------------------------
+% Main vertical RC chain
+% ------------------------------------------------
+
+\draw
+(Tair)
+    to[R,l=$H_{is}$] (Ts)
+    to[R,l=$H_{ms}$] (Tm);
+
+% Thermal mass
+\draw
+(Tm)
+    to[C,l=$C_m$] (4,-1.7)
+    node[ground]{};
+
+% ------------------------------------------------
+% Ventilation branch
+% ------------------------------------------------
+
+\draw
+(Tsup)
+    to[R,l=$H_{ve}$] (Tair);
+
+% Window branch
+\draw
+(Te1)
+    to[R,l=$H_w$] (Ts);
+
+% Opaque-envelope branch
+\draw
+(Te2)
+    to[R,l=$H_{em}$] (Tm);
+
+% Join exterior-temperature nodes
+\draw (Te1) -- (Te2);
+
+% ------------------------------------------------
+% Nodes
+% ------------------------------------------------
+
+\fill (Tsup) circle (2pt);
+\fill (Tair) circle (2pt);
+\fill (Te1) circle (2pt);
+\fill (Ts) circle (2pt);
+\fill (Tm) circle (2pt);
+
+% ------------------------------------------------
+% Temperature labels
+% ------------------------------------------------
+
+\node[left=3mm] at (Tsup) {$T_{\mathrm{sup}}$};
+\node[above=2mm] at (Tair) {$T_{\mathrm{air}}$};
+
+\node[left=3mm] at (Te1) {$T_e$};
+\node[right=3mm] at (Ts) {$T_s$};
+
+\node[right=3mm] at (Tm) {$T_m$};
+
+\end{circuitikz}
+
+\caption{Simplified 5R1C thermal network.}
+\label{fig:5r1c}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+
+\begin{circuitikz}[
+    scale=1.0,
+    transform shape,
+    every node/.style={font=\small},
+    label distance=2mm
+]
+
+% ------------------------------------------------
+% Coordinates
+% ------------------------------------------------
+
+% Left boundary nodes
+\coordinate (Tsup) at (0,6);
+\coordinate (Te)   at (0,0);
+
+% Main AW spine
+\coordinate (Tair) at (5,6);
+\coordinate (Tr)   at (5,4.2);
+\coordinate (TsAW) at (5,2.5);
+\coordinate (TmAW) at (5,0);
+
+% IW branch
+\coordinate (TrIW) at (9,4.2);
+\coordinate (TsIW) at (9,2.5);
+\coordinate (TmIW) at (9,0);
+
+% Capacitor ground points
+\coordinate (gAW) at (5,-3.0);
+\coordinate (gIW) at (9,-3.0);
+
+% ------------------------------------------------
+% Horizontal boundary paths
+% ------------------------------------------------
+
+% Supply / ventilation path
+\draw
+(Tsup)
+    to[R,l^=$R_{ve}$]
+(Tair);
+
+% Exterior equivalent-temperature path
+\draw
+(Te)
+    to[R,l_=$R_{\mathrm{rest},AW}$]
+(TmAW);
+
+% ------------------------------------------------
+% Central AW branch
+% ------------------------------------------------
+
+\draw
+(Tair)
+    to[R,l^=$R_{\alpha,i}$]
+(Tr)
+    to[R,l^=$R_{\alpha,AW}$]
+(TsAW)
+    to[R,l^=$R_{1,AW}$]
+(TmAW);
+
+% ------------------------------------------------
+% Parallel IW branch
+% ------------------------------------------------
+
+\draw (Tr) -- (TrIW);
+
+\draw
+(TrIW)
+    to[R,l^=$R_{\alpha,IW}$]
+(TsIW)
+    to[R,l^=$R_{1,IW}$]
+(TmIW);
+
+% ------------------------------------------------
+% Capacitances
+% ------------------------------------------------
+
+\draw
+(TmAW)
+    to[C,l_=$C_{m,AW}$]
+(gAW)
+    node[ground]{};
+
+\draw
+(TmIW)
+    to[C,l=$C_{m,IW}$]
+(gIW)
+    node[ground]{};
+
+% ------------------------------------------------
+% Filled nodes
+% ------------------------------------------------
+
+\foreach \p in {
+    Tsup,
+    Te,
+    Tair,
+    Tr,
+    TsAW,
+    TmAW,
+    TsIW,
+    TmIW
+}{
+    \fill (\p) circle (2pt);
+}
+
+% ------------------------------------------------
+% Temperature labels
+% ------------------------------------------------
+
+\node[left=4mm]  at (Tsup) {$T_{\mathrm{sup}}$};
+\node[left=4mm]  at (Te)   {$T_{e,\mathrm{eq}}$};
+
+\node[above=3mm] at (Tair) {$T_{\mathrm{air}}$};
+\node[left=4mm]  at (Tr)   {$T_r$};
+
+\node[right=2mm] at (TsAW) {$T_{s,AW}$};
+\node[right=2mm] at (TmAW) {$T_{m,AW}$};
+
+\node[right=4mm] at (TsIW) {$T_{s,IW}$};
+\node[right=4mm] at (TmIW) {$T_{m,IW}$};
+
+\end{circuitikz}
+
+\caption{Simplified VDI 6007 7R2C thermal network.}
+\label{fig:7r2c_vdi}
+\end{figure}
