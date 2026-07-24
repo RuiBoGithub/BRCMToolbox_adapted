@@ -1,5 +1,0 @@
-facade_solar_group;buildingelement_identifier;disturbance_identifier;absorptance;
-window_solar_group;buildingelement_identifier;disturbance_identifier;control_identifier;secondary_gains_fraction;
-;B0001;B0001;;1;
-infiltration_specification;zone_identifier;airchangerate;;;
-;Z0001;0;;;
