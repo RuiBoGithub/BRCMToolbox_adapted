@@ -1,0 +1,12 @@
+{
+  "_alpha": 5.0,
+  "_beta": 0.3,
+  "u_windows": 3.798,
+  "thermal_capacitance_per_floor_area": 165000,
+  "infl_rate_m3ph_m2": 0.0,
+  "ach_infl": 0.1,
+  "ach_vent": 0.0,
+  "ventilation_efficiency": 0.0,
+  "t_set_heating": 21.0,
+  "t_set_cooling": 28.0
+}

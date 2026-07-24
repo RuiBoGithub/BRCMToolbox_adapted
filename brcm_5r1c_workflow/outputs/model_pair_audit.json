@@ -1,0 +1,53 @@
+{
+  "source": "/Users/rui.bo/Desktop/BASE/_development/pyBRCMToolbox/_E+/1ZoneUncontrolled1.idf",
+  "shared": {
+    "source": "/Users/rui.bo/Desktop/BASE/_development/pyBRCMToolbox/_E+/1ZoneUncontrolled1.idf",
+    "floor_area_m2": 232.2576,
+    "volume_m3": 1061.881747,
+    "opaque_envelope_area_m2": 500.96672,
+    "window_area_m2": 10.0,
+    "opaque_ua_w_k": 159.86000924913424,
+    "window_ua_w_k": 37.980000000000004,
+    "thermal_capacity_j_k": 44238430.91542978,
+    "infiltration_ach": 0.1,
+    "ventilation_ach": 0.0,
+    "heat_recovery_efficiency": 0.0,
+    "boundary_counts": {
+      "outdoors": 5,
+      "surface": 1
+    },
+    "schedule_names": [],
+    "json_overlay": {
+      "_alpha": 5.0,
+      "_beta": 0.3,
+      "u_windows": 3.798,
+      "thermal_capacitance_per_floor_area": 165000,
+      "infl_rate_m3ph_m2": 0.0,
+      "ach_infl": 0.1,
+      "ach_vent": 0.0,
+      "ventilation_efficiency": 0.0,
+      "t_set_heating": 21.0,
+      "t_set_cooling": 28.0
+    }
+  },
+  "5R1C": {
+    "floor_area_m2": 232.2576,
+    "volume_m3": 1061.881747,
+    "h_tr_em_w_k": 159.86000924913424,
+    "h_tr_w_w_k": 37.980000000000004,
+    "h_tr_ms_w_k": 5283.8604,
+    "h_tr_is_w_k": 4006.4436,
+    "h_ve_adj_w_k": 35.39605823333333,
+    "c_m_j_k": 44238430.91542978,
+    "mass_area_m2": 580.644,
+    "total_internal_area_m2": 1161.288
+  },
+  "BRCM": {
+    "state_count": 2,
+    "heat_flux_count": 2,
+    "states": [
+      "x_Z0001",
+      "x_B0005_L1_s1_ADBZ0001"
+    ]
+  }
+}
